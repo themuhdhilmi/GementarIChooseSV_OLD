@@ -1,0 +1,37 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('lecturer_mains', function (Blueprint $table) {
+            $table->string('email')->index();
+            $table->string('full_name');
+            $table->string('track');
+            $table->string('scopus_id');
+            $table->string('google_scholar');
+            $table->integer('consultation_price');
+            $table->boolean('send_email_notification');
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('lecturer_mains');
+    }
+};
