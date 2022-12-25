@@ -13,14 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('lecturer_mains', function (Blueprint $table) {
-            $table->string('email')->unique();
+        Schema::create('student_lists', function (Blueprint $table) {
+            $table->id();
+            $table->string('email');
+            $table->string('matric_number');
             $table->string('full_name');
-            $table->string('track');
-            $table->string('scopus_id')->nullable();
-            $table->string('google_scholar')->nullable();
-            $table->integer('consultation_price')->nullable();
-            $table->boolean('send_email_notification')->nullable();
             $table->timestamps();
         });
     }
@@ -32,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('lecturer_mains');
+        Schema::dropIfExists('student_lists');
     }
 };
