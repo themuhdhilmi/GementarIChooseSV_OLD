@@ -14,5 +14,13 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    if (Auth::check()) {
+        $user = Auth::user();
+        if ($user->category == 'admin') {
+            return redirect()->route('dashboard');
+        } elseif ($user->category == 'lecturer') {
+            return redirect()->route('welcome');
+        }
+    }
+    return view('sign-in');
 });
