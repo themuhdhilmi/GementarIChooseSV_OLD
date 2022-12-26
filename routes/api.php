@@ -1,9 +1,8 @@
 <?php
 
-use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\LecturerController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,17 +20,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
-Route::get('lecturer', [LecturerController::class, 'index']);
-Route::get('lecturer/{id}', [LecturerController::class, 'index']);
-Route::post('lecturer', [LecturerController::class, 'index']);
-Route::put('lecturer/{id}', [LecturerController::class, 'index']);
-Route::delete('lecturer/{id}', [LecturerController::class, 'index']);
+Route::post('/rstud', [App\Http\Controllers\UserController::class, 'createStudent']);
+Route::post('/radmin', [App\Http\Controllers\UserController::class, 'createAdmin'])->name('radmin');
+Route::post('/rstaff', [App\Http\Controllers\UserController::class, 'createStaff']);
+Route::put('/global_admins',  [App\Http\Controllers\GlobalAdminController::class, 'update']);
 
 
-
-Route::post('register', [AuthController::class, 'register']);
-Route::post('login', [AuthController::class, 'login']);
-
-Route::middleware('auth:sanctum')->group(function () {
-    Route::post('logout', [AuthController::class, 'logout']);
-});
