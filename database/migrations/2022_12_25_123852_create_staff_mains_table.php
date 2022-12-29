@@ -14,8 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::create('staff_mains', function (Blueprint $table) {
+            $table->id();
             $table->string('email')->unique();
-            $table->string('full_name');
             $table->string('track');
             $table->boolean('can_supervise')->default('0');
             $table->string('scopus_id')->nullable();

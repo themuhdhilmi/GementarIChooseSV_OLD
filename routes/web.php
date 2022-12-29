@@ -46,13 +46,27 @@ Route::get('admin_page/{id}', function ($id) {
                 'studentsList' => $studentsList,
                 'staffMain' => $staffMain,
                 'staffStudents' => $staffStudents,
-                'StaffCanSupervise' => $StaffCanSupervise
+                'StaffCanSupervise' => $StaffCanSupervise,
+                'MainUser' => $MainUser
             ]);
         }
 
         if ($id == 'manage_admin') {
 
             return view('admin/manage_admin',  [
+                'globalAdmin' =>  $globalAdmin,
+                'students' => $students ,
+                'studentsList' => $studentsList,
+                'staffMain' => $staffMain,
+                'staffStudents' => $staffStudents,
+                'StaffCanSupervise' => $StaffCanSupervise,
+                'MainUser' => $MainUser
+            ]);
+        }
+
+        if ($id == 'manage_staff') {
+
+            return view('admin/manage_staff',  [
                 'globalAdmin' =>  $globalAdmin,
                 'students' => $students ,
                 'studentsList' => $studentsList,

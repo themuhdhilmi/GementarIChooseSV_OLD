@@ -32,7 +32,6 @@ class StudentController extends Controller
         $student = new StudentMain();
         $student->email = $request->input('email');
         $student->matric_number = $request->input('matric_number');
-        $student->full_name = $request->input('full_name');
         $student->track = $request->input('track');
         $student->session = $request->input('session');
         $student->save();
@@ -47,7 +46,6 @@ class StudentController extends Controller
         if ($student) {
             $student->email = $request->input('email');
             $student->matric_number = $request->input('matric_number');
-            $student->full_name = $request->input('full_name');
             $student->track = $request->input('track');
             $student->session = $request->input('session');
             $student->save();

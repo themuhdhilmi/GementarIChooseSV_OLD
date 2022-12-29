@@ -4,19 +4,19 @@
 
 @section('content')
     <!--
-    =========================================================
-    * Argon Dashboard 2 - v2.0.4
-    =========================================================
+        =========================================================
+        * Argon Dashboard 2 - v2.0.4
+        =========================================================
 
-    * Product Page: https://www.creative-tim.com/product/argon-dashboard
-    * Copyright 2022 Creative Tim (https://www.creative-tim.com)
-    * Licensed under MIT (https://www.creative-tim.com/license)
-    * Coded by Creative Tim
+        * Product Page: https://www.creative-tim.com/product/argon-dashboard
+        * Copyright 2022 Creative Tim (https://www.creative-tim.com)
+        * Licensed under MIT (https://www.creative-tim.com/license)
+        * Coded by Creative Tim
 
-    =========================================================
+        =========================================================
 
-    * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-    -->
+        * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+        -->
     <style type="text/css">
         html {
             overflow-y: hidden;
@@ -295,14 +295,15 @@
                                 <ul class="nav nav-pills nav-fill p-1" role="tablist">
                                     <li class="nav-item">
                                         <a class="dropdown-item" href="{{ route('logout') }}"
-                                        onclick="event.preventDefault();
+                                            onclick="event.preventDefault();
                                                       document.getElementById('logout-form').submit();">
-                                         {{ __('Logout') }}
-                                     </a>
+                                            {{ __('Logout') }}
+                                        </a>
 
-                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                         @csrf
-                                     </form>
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                            class="d-none">
+                                            @csrf
+                                        </form>
                                         </a>
                                     </li>
                                 </ul>
@@ -318,17 +319,18 @@
 
                         <div class="card">
                             <div class="card-header mx-4 p-3 text-center">
-                              <div class="icon icon-shape icon-lg bg-gradient-primary shadow text-center border-radius-lg">
-                                <i class="fas fa-duotone fa-quote-left"></i>
-                              </div>
+                                <div
+                                    class="icon icon-shape icon-lg bg-gradient-primary shadow text-center border-radius-lg">
+                                    <i class="fas fa-duotone fa-quote-left"></i>
+                                </div>
                             </div>
                             <div class="card-body pt-0 p-3 text-center">
-                              <h6 class="text-center mb-0">Quota</h6>
-                              <span class="text-xs">student quota allowed to supervise</span>
-                              <hr class="horizontal dark my-3">
-                              <h5 class="mb-0">{{ $globalAdmin->quota }}</h5>
+                                <h6 class="text-center mb-0">Quota</h6>
+                                <span class="text-xs">student quota allowed to supervise</span>
+                                <hr class="horizontal dark my-3">
+                                <h5 class="mb-0">{{ $globalAdmin->quota }}</h5>
                             </div>
-                          </div>
+                        </div>
 
                     </div>
 
@@ -336,17 +338,18 @@
 
                         <div class="card">
                             <div class="card-header mx-4 p-3 text-center">
-                              <div class="icon icon-shape icon-lg bg-gradient-primary shadow text-center border-radius-lg">
-                                <i class="fas fa-duotone fa-quote-left"></i>
-                              </div>
+                                <div
+                                    class="icon icon-shape icon-lg bg-gradient-primary shadow text-center border-radius-lg">
+                                    <i class="fas fa-duotone fa-quote-left"></i>
+                                </div>
                             </div>
                             <div class="card-body pt-0 p-3 text-center">
-                              <h6 class="text-center mb-0">Total Supervisor</h6>
-                              <span class="text-xs">total staff that can supervise</span>
-                              <hr class="horizontal dark my-3">
-                              <h5 class="mb-0">{{ $StaffCanSupervise }}</h5>
+                                <h6 class="text-center mb-0">Total Supervisor</h6>
+                                <span class="text-xs">total staff that can supervise</span>
+                                <hr class="horizontal dark my-3">
+                                <h5 class="mb-0">{{ $StaffCanSupervise }}</h5>
                             </div>
-                          </div>
+                        </div>
 
                     </div>
 
@@ -354,17 +357,18 @@
 
                         <div class="card">
                             <div class="card-header mx-4 p-3 text-center">
-                              <div class="icon icon-shape icon-lg bg-gradient-primary shadow text-center border-radius-lg">
-                                <i class="fas fa-duotone fa-quote-left"></i>
-                              </div>
+                                <div
+                                    class="icon icon-shape icon-lg bg-gradient-primary shadow text-center border-radius-lg">
+                                    <i class="fas fa-duotone fa-quote-left"></i>
+                                </div>
                             </div>
                             <div class="card-body pt-0 p-3 text-center">
-                              <h6 class="text-center mb-0">Session</h6>
-                              <span class="text-xs">current semester session</span>
-                              <hr class="horizontal dark my-3">
-                              <h5 class="mb-0">{{ $globalAdmin->session }}</h5>
+                                <h6 class="text-center mb-0">Session</h6>
+                                <span class="text-xs">current semester session</span>
+                                <hr class="horizontal dark my-3">
+                                <h5 class="mb-0">{{ $globalAdmin->session }}</h5>
                             </div>
-                          </div>
+                        </div>
 
                     </div>
 
@@ -372,164 +376,216 @@
 
                         <div class="card">
                             <div class="card-header mx-4 p-3 text-center">
-                              <div class="icon icon-shape icon-lg bg-gradient-primary shadow text-center border-radius-lg">
-                                <i class="fas fa-duotone fa-quote-left"></i>
-                              </div>
+                                <div
+                                    class="icon icon-shape icon-lg bg-gradient-primary shadow text-center border-radius-lg">
+                                    <i class="fas fa-duotone fa-quote-left"></i>
+                                </div>
                             </div>
                             <div class="card-body pt-0 p-3 text-center">
-                              <h6 class="text-center mb-0">Students List</h6>
-                              <span class="text-xs">student quota allowed to supervise</span>
-                              <hr class="horizontal dark my-3">
-                              <div class="table-responsive">
-                                <table class="table align-items-center ">
-                                  <tbody>
+                                <h6 class="text-center mb-0">Students List</h6>
+                                <span class="text-xs">student quota allowed to supervise</span>
+                                <hr class="horizontal dark my-3">
+                                <div class="table-responsive">
+                                    <table class="table align-items-center ">
+                                        <tbody>
 
-                                    @foreach ($students as $user)
-                                    <tr>
-                                      <td class="w-10">
-                                        <div class="d-flex px-2 py-1 align-items-center">
-                                          <div>
-                                            <a>{{ $loop->index + 1 }}</a>
-                                          </div>
-                                          <div class="ms-4">
-                                            <p class="text-xs font-weight-bold mb-0">Project Tittle:</p>
-                                            <h6 class="text-sm mb-0">@if ($user->tittle == '')     <a style="color: red">None</a>    @else   {{ $user->tittle }}   @endif</h6>
-                                          </div>
-                                        </div>
-                                      </td>
-                                      <td class="align-middle text-sm">
-                                        <div class="col text-center">
-                                          <p class="text-xs font-weight-bold mb-0">Supervisor:</p>
-                                          @foreach ($staffStudents as $stulist)
-                                            @if ($stulist->email == $user->email)
-                                                @if ($stulist->is_confirmed == '1')
-                                                   <h6 class="text-sm mb-0">
-                                                    @foreach ($staffMain as $staffMainNestList)
-                                                        @if ($staffMainNestList->email == $stulist->email_staff)
-                                                            {{ $staffMainNestList->full_name }}
-                                                        @endif
-                                                    @endforeach
-                                                   </h6>
-                                                @else
-                                                   <a style="color: red">None</a>
-                                                @endif
-                                            @endif
-                                          @endforeach
-                                        </div>
-                                      </td>
-                                      <td>
-                                        <div class="text-center">
-                                          <p class="text-xs font-weight-bold mb-0">Name:</p>
-                                          <h6 class="text-sm mb-0">@if ($user->full_name == '')     <a style="color: red">None</a>    @else   {{ $user->full_name }} {{ " " }} {{ $user->matric_number }}   @endif</h6>
-                                          @foreach ($studentsList as $studentsListUser)
-                                                @if ($user->email == $studentsListUser->email)
-                                                <h6 class="text-sm mb-0">@if ($studentsListUser->full_name == '')     <a style="color: red">None</a>    @else   {{ $studentsListUser->full_name }} {{ " " }} {{ $studentsListUser->matric_number }}   @endif</h6>
-                                                @endif
-                                          @endforeach
-                                        </div>
-                                      </td>
-                                      <td>
-                                        <div class="text-center">
-                                          <p class="text-xs font-weight-bold mb-0">Track:</p>
-                                          <h6 class="text-sm mb-0">@if ($user->track == '')     <a style="color: red">None</a>    @else   {{ $user->track }}   @endif</h6>
-                                        </div>
-                                      </td>
-                                      <td class="align-middle text-sm">
-                                        <div class="col text-center">
-                                          <p class="text-xs font-weight-bold mb-0">Session:</p>
-                                          <h6 class="text-sm mb-0">@if ($user->session == '')     <a style="color: red">None</a>     @else   {{ $user->session }}   @endif</h6>
-                                        </div>
-                                      </td>
-                                      <td class="align-middle text-sm">
-                                        <div class="col text-center">
-                                          <p class="text-xs font-weight-bold mb-0">Downloadable:</p>
-                                          @if ($user->has_abstract_path != '')
-                                          <button type="button" onclick="location.href='{{ asset('downloadable/abstracct') }}/{{ $user->email }}.pdf'" class="btn btn-link text-dark text-sm mb-0 px-0 ms-4"><i class="fas fa-file-pdf text-lg me-1"></i>Abstract</button>
-                                          @elseif($user->has_poster_proposal_path != '')
-                                          <button type="button" onclick="location.href='{{ asset('downloadable/poster_proporsal') }}/{{ $user->email }}.pdf'" class="btn btn-link text-dark text-sm mb-0 px-0 ms-4"><i class="fas fa-file-pdf text-lg me-1"></i>Poster/Proposal</button>
-                                          @else
-                                          <a style="color: red">None</a>
-                                          @endif
-                                        </div>
-                                      </td>
-                                    </tr>
-                                    @endforeach
-                                  </tbody>
-                                </table>
-                              </div>
+                                            @foreach ($students as $user)
+                                                <tr>
+                                                    <td class="w-10">
+                                                        <div class="d-flex px-2 py-1 align-items-center">
+                                                            <div>
+                                                                <a>{{ $loop->index + 1 }}</a>
+                                                            </div>
+                                                            <div class="ms-4">
+                                                                <p class="text-xs font-weight-bold mb-0">Project Tittle:
+                                                                </p>
+                                                                <h6 class="text-sm mb-0">
+                                                                    @if ($user->tittle == '')
+                                                                        <a style="color: red">None</a>
+                                                                    @else
+                                                                        {{ $user->tittle }}
+                                                                    @endif
+                                                                </h6>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td class="align-middle text-sm">
+                                                        <div class="col text-center">
+                                                            <p class="text-xs font-weight-bold mb-0">Supervisor:</p>
+                                                            @foreach ($staffStudents as $stulist)
+                                                                @if ($stulist->email == $user->email)
+                                                                    @if ($stulist->is_confirmed == '1')
+                                                                        <h6 class="text-sm mb-0">
+                                                                            @foreach ($staffMain as $staffMainNestList)
+                                                                                @if ($staffMainNestList->email == $stulist->email_staff)
+                                                                                    @foreach ($MainUser as $allUser)
+                                                                                        @if ($staffMainNestList->email == $allUser->email)
+                                                                                            {{ $allUser->name }}
+                                                                                        @endif
+                                                                                    @endforeach
+                                                                                @endif
+                                                                            @endforeach
+                                                                        </h6>
+                                                                    @else
+                                                                        <a style="color: red">None</a>
+                                                                    @endif
+                                                                @endif
+                                                            @endforeach
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="text-center">
+                                                            <p class="text-xs font-weight-bold mb-0">Name:</p>
+                                                            <h6 class="text-sm mb-0">
+                                                                @if ($user->email == '')
+                                                                    <a style="color: red">None</a>
+                                                                @else
+
+                                                                    @foreach ($MainUser as $allUser)
+                                                                        @if ($user->email == $allUser->email)
+                                                                            {{ $allUser->name }}
+                                                                        @endif
+                                                                    @endforeach {{ ' ' }}
+
+                                                                    {{ $user->matric_number }}
+
+                                                                @endif
+                                                            </h6>
+                                                            @foreach ($studentsList as $studentsListUser)
+                                                                @if ($user->email == $studentsListUser->email)
+                                                                    <h6 class="text-sm mb-0">
+                                                                        @if ($studentsListUser->full_name == '')
+                                                                            <a style="color: red">None</a>
+                                                                        @else
+                                                                            {{ $studentsListUser->full_name }}
+                                                                            {{ ' ' }}
+                                                                            {{ $studentsListUser->matric_number }}
+                                                                        @endif
+                                                                    </h6>
+                                                                @endif
+                                                            @endforeach
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="text-center">
+                                                            <p class="text-xs font-weight-bold mb-0">Track:</p>
+                                                            <h6 class="text-sm mb-0">
+                                                                @if ($user->track == '')
+                                                                    <a style="color: red">None</a>
+                                                                @else
+                                                                    {{ $user->track }}
+                                                                @endif
+                                                            </h6>
+                                                        </div>
+                                                    </td>
+                                                    <td class="align-middle text-sm">
+                                                        <div class="col text-center">
+                                                            <p class="text-xs font-weight-bold mb-0">Session:</p>
+                                                            <h6 class="text-sm mb-0">
+                                                                @if ($user->session == '')
+                                                                    <a style="color: red">None</a>
+                                                                @else
+                                                                    {{ $user->session }}
+                                                                @endif
+                                                            </h6>
+                                                        </div>
+                                                    </td>
+                                                    <td class="align-middle text-sm">
+                                                        <div class="col text-center">
+                                                            <p class="text-xs font-weight-bold mb-0">Downloadable:</p>
+                                                            @if ($user->has_abstract_path != '')
+                                                                <button type="button"
+                                                                    onclick="location.href='{{ asset('downloadable/abstracct') }}/{{ $user->email }}.pdf'"
+                                                                    class="btn btn-link text-dark text-sm mb-0 px-0 ms-4"><i
+                                                                        class="fas fa-file-pdf text-lg me-1"></i>Abstract</button>
+                                                            @elseif($user->has_poster_proposal_path != '')
+                                                                <button type="button"
+                                                                    onclick="location.href='{{ asset('downloadable/poster_proporsal') }}/{{ $user->email }}.pdf'"
+                                                                    class="btn btn-link text-dark text-sm mb-0 px-0 ms-4"><i
+                                                                        class="fas fa-file-pdf text-lg me-1"></i>Poster/Proposal</button>
+                                                            @else
+                                                                <a style="color: red">None</a>
+                                                            @endif
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
-                          </div>
-                    </div>
-
-                <footer class="footer pt-3  ">
-                    <div class="container-fluid">
-                        <br><br><br><br><br>
-
-                    </div>
-                </footer>
-            </div>
-        </div>
-        <div class="fixed-plugin">
-            <a class="fixed-plugin-button text-dark position-fixed px-3 py-2">
-                <i class="fa fa-cog py-2"> </i>
-            </a>
-            <div class="card shadow-lg">
-                <div class="card-header pb-0 pt-3 ">
-                    <div class="float-start">
-                        <h5 class="mt-3 mb-0">Configuration</h5>
-                        <p>Turn on and off night mode.</p>
-                    </div>
-                    <div class="float-end mt-4">
-                        <button class="btn btn-link text-dark p-0 fixed-plugin-close-button">
-                            <i class="fa fa-close"></i>
-                        </button>
-                    </div>
-                    <!-- End Toggle Button -->
-                </div>
-                <hr class="horizontal dark my-1">
-                <div class="card-body pt-sm-3 pt-0 overflow-auto">
-                    <div class="mt-2 mb-5 d-flex">
-                        <h6 class="mb-0">Light / Dark</h6>
-                        <div class="form-check form-switch ps-0 ms-auto my-auto">
-                            <input class="form-check-input mt-1 ms-auto" type="checkbox" id="dark-version"
-                                onclick="darkMode(this)">
                         </div>
                     </div>
-                    <div class="w-100 text-center">
-                        <a class="github-button" href="https://github.com/creativetimofficial/argon-dashboard"
-                            data-icon="octicon-star" data-size="large" data-show-count="true"
-                            aria-label="Star creativetimofficial/argon-dashboard on GitHub">Star</a>
-                        <h6 class="mt-3">Thank you for sharing!</h6>
-                        <a href="https://twitter.com/intent/tweet?text=Check%20Argon%20Dashboard%20made%20by%20%40CreativeTim%20%23webdesign%20%23dashboard%20%23bootstrap5&amp;url=https%3A%2F%2Fwww.creative-tim.com%2Fproduct%2Fargon-dashboard"
-                            class="btn btn-dark mb-0 me-2" target="_blank">
-                            <i class="fab fa-twitter me-1" aria-hidden="true"></i> Tweet
-                        </a>
-                        <a href="https://www.facebook.com/sharer/sharer.php?u=https://www.creative-tim.com/product/argon-dashboard"
-                            class="btn btn-dark mb-0 me-2" target="_blank">
-                            <i class="fab fa-facebook-square me-1" aria-hidden="true"></i> Share
-                        </a>
+
+                    <footer class="footer pt-3  ">
+                        <div class="container-fluid">
+                            <br><br><br><br><br>
+
+                        </div>
+                    </footer>
+                </div>
+            </div>
+            <div class="fixed-plugin">
+                <a class="fixed-plugin-button text-dark position-fixed px-3 py-2">
+                    <i class="fa fa-cog py-2"> </i>
+                </a>
+                <div class="card shadow-lg">
+                    <div class="card-header pb-0 pt-3 ">
+                        <div class="float-start">
+                            <h5 class="mt-3 mb-0">Configuration</h5>
+                            <p>Turn on and off night mode.</p>
+                        </div>
+                        <div class="float-end mt-4">
+                            <button class="btn btn-link text-dark p-0 fixed-plugin-close-button">
+                                <i class="fa fa-close"></i>
+                            </button>
+                        </div>
+                        <!-- End Toggle Button -->
+                    </div>
+                    <hr class="horizontal dark my-1">
+                    <div class="card-body pt-sm-3 pt-0 overflow-auto">
+                        <div class="mt-2 mb-5 d-flex">
+                            <h6 class="mb-0">Light / Dark</h6>
+                            <div class="form-check form-switch ps-0 ms-auto my-auto">
+                                <input class="form-check-input mt-1 ms-auto" type="checkbox" id="dark-version"
+                                    onclick="darkMode(this)">
+                            </div>
+                        </div>
+                        <div class="w-100 text-center">
+                            <a class="github-button" href="https://github.com/creativetimofficial/argon-dashboard"
+                                data-icon="octicon-star" data-size="large" data-show-count="true"
+                                aria-label="Star creativetimofficial/argon-dashboard on GitHub">Star</a>
+                            <h6 class="mt-3">Thank you for sharing!</h6>
+                            <a href="https://twitter.com/intent/tweet?text=Check%20Argon%20Dashboard%20made%20by%20%40CreativeTim%20%23webdesign%20%23dashboard%20%23bootstrap5&amp;url=https%3A%2F%2Fwww.creative-tim.com%2Fproduct%2Fargon-dashboard"
+                                class="btn btn-dark mb-0 me-2" target="_blank">
+                                <i class="fab fa-twitter me-1" aria-hidden="true"></i> Tweet
+                            </a>
+                            <a href="https://www.facebook.com/sharer/sharer.php?u=https://www.creative-tim.com/product/argon-dashboard"
+                                class="btn btn-dark mb-0 me-2" target="_blank">
+                                <i class="fab fa-facebook-square me-1" aria-hidden="true"></i> Share
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <!--   Core JS Files   -->
-        <script src="../assets/js/core/popper.min.js"></script>
-        <script src="../assets/js/core/bootstrap.min.js"></script>
-        <script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
-        <script src="../assets/js/plugins/smooth-scrollbar.min.js"></script>
-        <script>
-            var win = navigator.platform.indexOf('Win') > -1;
-            if (win && document.querySelector('#sidenav-scrollbar')) {
-                var options = {
-                    damping: '0.5'
+            <!--   Core JS Files   -->
+            <script src="../assets/js/core/popper.min.js"></script>
+            <script src="../assets/js/core/bootstrap.min.js"></script>
+            <script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
+            <script src="../assets/js/plugins/smooth-scrollbar.min.js"></script>
+            <script>
+                var win = navigator.platform.indexOf('Win') > -1;
+                if (win && document.querySelector('#sidenav-scrollbar')) {
+                    var options = {
+                        damping: '0.5'
+                    }
+                    Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
                 }
-                Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
-            }
-        </script>
-        <!-- Github buttons -->
-        <script async defer src="https://buttons.github.io/buttons.js"></script>
-        <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
-        <script src="../assets/js/argon-dashboard.min.js?v=2.0.4"></script>
+            </script>
+            <!-- Github buttons -->
+            <script async defer src="https://buttons.github.io/buttons.js"></script>
+            <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
+            <script src="../assets/js/argon-dashboard.min.js?v=2.0.4"></script>
     </body>
 
     </html>

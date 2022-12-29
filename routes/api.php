@@ -20,9 +20,37 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
-Route::post('/rstud', [App\Http\Controllers\UserController::class, 'createStudent']);
-Route::post('/radmin', [App\Http\Controllers\UserController::class, 'createAdmin'])->name('radmin');
-Route::post('/rstaff', [App\Http\Controllers\UserController::class, 'createStaff']);
-Route::put('/global_admins',  [App\Http\Controllers\GlobalAdminController::class, 'update']);
+// Delete all user
+Route::delete('user_delete_all', [App\Http\Controllers\UserController::class, 'userDelete'])->name('user_delete_all');
+// Update user password base on email
+Route::post('user_update_password', [App\Http\Controllers\UserController::class, 'userUpdatePassword'])->name('user_update_password');
+// Create new student
+Route::post('rstud', [App\Http\Controllers\UserController::class, 'createStudent']);
+// Create new admin
+Route::post('radmin', [App\Http\Controllers\UserController::class, 'createAdmin'])->name('radmin');
+// Create new Staff
+Route::post('rstaff', [App\Http\Controllers\UserController::class, 'createStaff'])->name('rstaff');
+// Create new Staff
+Route::post('updateStaff', [App\Http\Controllers\UserController::class, 'updateStaff'])->name('updateStaff');
+
+Route::put('global_admins', [App\Http\Controllers\GlobalAdminController::class, 'update']);
 
 
+
+
+// // Delete all user
+// Route::middleware('auth:sanctum')->delete('user_delete_all', [App\Http\Controllers\UserController::class, 'userDelete'])->name('user_delete_all');
+
+// // Update user password base on email
+// Route::middleware('auth:sanctum')->post('user_update_password', [App\Http\Controllers\UserController::class, 'userUpdatePassword'])->name('user_update_password');
+
+// // Create new student
+// Route::middleware('auth:sanctum')->post('rstud', [App\Http\Controllers\UserController::class, 'createStudent']);
+
+// // Create new admin
+// Route::middleware('auth:sanctum')->post('radmin', [App\Http\Controllers\UserController::class, 'createAdmin'])->name('radmin');
+
+// // Create new Staff
+// Route::middleware('auth:sanctum')->post('rstaff', [App\Http\Controllers\UserController::class, 'createStaff']);
+
+// Route::middleware('auth:sanctum')->put('global_admins', [App\Http\Controllers\GlobalAdminController::class, 'update']);

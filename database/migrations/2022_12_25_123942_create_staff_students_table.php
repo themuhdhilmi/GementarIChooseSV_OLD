@@ -14,6 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('staff_students', function (Blueprint $table) {
+            $table->id();
             $table->string('email')->unique();
             $table->string('email_staff')->nullable();
             $table->boolean('is_confirmed')->default('0');
