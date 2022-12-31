@@ -76,9 +76,36 @@ Route::get('admin_page/{id}', function ($id) {
                 'MainUser' => $MainUser
             ]);
         }
+
+        if ($id == 'bulk_add_staff') {
+
+            return view('admin/bulk_add_staff',  [
+                'globalAdmin' =>  $globalAdmin,
+                'students' => $students ,
+                'studentsList' => $studentsList,
+                'staffMain' => $staffMain,
+                'staffStudents' => $staffStudents,
+                'StaffCanSupervise' => $StaffCanSupervise,
+                'MainUser' => $MainUser
+            ]);
+        }
+
+        if ($id == 'manage_student') {
+
+            return view('admin/manage_student',  [
+                'globalAdmin' =>  $globalAdmin,
+                'students' => $students,
+                'studentsList' => $studentsList,
+                'staffMain' => $staffMain,
+                'staffStudents' => $staffStudents,
+                'StaffCanSupervise' => $StaffCanSupervise,
+                'MainUser' => $MainUser
+            ]);
+        }
     }
 
     abort(404);
 })->name('admin_page');
+
 
 

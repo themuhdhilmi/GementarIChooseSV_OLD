@@ -68,15 +68,15 @@
                         </a>
                     </li>
                     <li class="nav-item mt-3">
-                        <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">STAFF</h6>
+                        <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">student</h6>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="{{ route('admin_page', ['id' => 'manage_staff']) }}">
+                        <a class="nav-link " href="{{ route('admin_page', ['id' => 'manage_staff']) }}">
                             <div
                                 class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                                 <i class="ni ni-single-copy-04 text-warning text-sm opacity-10"></i>
                             </div>
-                            <span class="nav-link-text ms-1">Manage Staff</span>
+                            <span class="nav-link-text ms-1">Manage staff</span>
                         </a>
                     </li>
                     <li class="nav-item">
@@ -85,14 +85,14 @@
                                 class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                                 <i class="ni ni-single-copy-04 text-warning text-sm opacity-10"></i>
                             </div>
-                            <span class="nav-link-text ms-1">Bulk Add Staff</span>
+                            <span class="nav-link-text ms-1">Bulk Add staff</span>
                         </a>
                     </li>
                     <li class="nav-item mt-3">
                         <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">STUDENT</h6>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link " href="{{ route('admin_page', ['id' => 'manage_student']) }}">
+                    <li class="nav-item ">
+                        <a class="nav-link active" href="{{ route('admin_page', ['id' => 'manage_student']) }}">
                             <div
                                 class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                                 <i class="ni ni-collection text-info text-sm opacity-10"></i>
@@ -312,14 +312,14 @@
                             </div>
                             <div class="card-body pt-0 p-3 text-center">
                                 <div id="form-message" class="mt-3"></div>
-                                <h6 class="text-center mb-0">Add Staff</h6>
-                                <span class="text-xs">Staff can accept/decline their supervisee</span>
+                                <h6 class="text-center mb-0">Add student</h6>
+                                <span class="text-xs">student can accept/decline their supervisee</span>
                                 <hr class="horizontal dark my-3">
 
                                 <form id="form" method="POST" action="{{ route('rstaff') }}">
                                     @csrf
-                                    <label for="example-text-input">Email</label>
-                                    <input name="email" class="form-control" type="email" required>
+                                    <label for="example-text-input">Matric Number</label>
+                                    <input name="num_matric" class="form-control" type="text" required>
                                     <label for="example-text-input">Full Name</label>
                                     <input name="full_name" class="form-control" type="text" required>
 
@@ -376,18 +376,18 @@
                         </div>
                     </div>
                     <div class="col-md-9 py-2">
-                        <form id="update-form" action="{{ route('updateStaff') }}" method="POST">
+                        <form id="update-form" action="{{ route('updateStudent') }}" method="POST">
                             @csrf
                             <div class="card">
                                 <div class="p-3 text-left">
                                     <div>
                                         <button id="this_is_save" type="submit" class="btn btn-success btn-sm" ">Save</button>
-                                             @if (isset($_GET['message']))
-                                                @if ($_GET['message'] == 'success')
-                                                    <div class="alert alert-success" role="alert">
-                                                        Successfully Updated
-                                                    </div>
-                                                @endif
+                                                                                     @if (isset($_GET['message']))
+                                            @if ($_GET['message'] == 'success')
+                                                <div class="alert alert-success" role="alert">
+                                                    Successfully Updated
+                                                </div>
+                                            @endif
                                             @endif
                                     </div>
                                 </div>
@@ -407,10 +407,10 @@
                                                         Track</th>
                                                     <th
                                                         class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                        SV Status</th>
+                                                        Current SV</th>
                                                     <th
                                                         class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                        Request</th>
+                                                        Matric Number</th>
                                                     <th
                                                         class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                                         Confirmed</th>
@@ -421,277 +421,263 @@
                                                 </tr>
                                             </thead>
 
-                                            @foreach ($MainUser as $staffUser_Group)
-                                                @if ($staffUser_Group->role == 'Staff')
-                                                    @foreach ($staffMain as $staffUser_Inner)
-                                                        @if ($staffUser_Group->email == $staffUser_Inner->email)
-                                                            <tr id='admin_row_{{ $staffUser_Group->email }}'>
+                                            @foreach ($MainUser as $studentUser_Group)
+                                                @if ($studentUser_Group->role == 'Student')
+
+                                                    @foreach ($students as $studentUser_Inner)
+                                                        @if ($studentUser_Group->email == $studentUser_Inner->email)
+                                                            <tr id='admin_row_{{ $studentUser_Group->email }}'>
                                                                 <td>
-                                                                    <div class="d-flex px-2 py-1">
-                                                                        <div><img
-                                                                                src="{{ asset('downloadable/staff_img/' . $staffUser_Group->email . '.jpg') }}"
-                                                                                class="avatar avatar-sm me-3"
-                                                                                alt="user6">
-                                                                        </div>
-                                                                        <div
-                                                                            class="d-flex flex-column justify-content-center">
-                                                                            <p class="text-xs font-weight-bold mb-0">
-                                                                                <input
-                                                                                    value="{{ $staffUser_Group->name }}"
-                                                                                    type="text" class="form-control"
-                                                                                    name="staff_name_{{ $staffUser_Group->email }}"
-                                                                                    aria-describedby="emailHelp"
-                                                                                    placeholder="Enter email">
-                                                                            </p>
-                                                                        </div>
-                                                                    </div>
+                                                                    <p class="text-xs font-weight-bold mb-0">
+                                                                        <input value="{{ $studentUser_Group->name }}"
+                                                                            type="text" class="form-control"
+                                                                            name="student_name_{{ $studentUser_Group->email }}"
+                                                                            aria-describedby="emailHelp"
+                                                                            placeholder="Enter email">
+                                                                    </p>
                                                                 </td>
                                                                 <td>
                                                                     <p class="text-xs font-weight-bold mb-0">
-                                                                        <input value="{{ $staffUser_Group->email }}"
-                                                                            type="email" class="form-control"
-                                                                            name="staff_email_{{ $staffUser_Group->email }}"
+                                                                        <input value="{{ $studentUser_Group->email }}"
+                                                                            type="text" class="form-control"
+                                                                            name="student_email_{{ $studentUser_Group->email }}"
                                                                             aria-describedby="emailHelp"
                                                                             placeholder="Enter email">
                                                                     </p>
                                                                 </td>
                                                                 <td>
                                                                     <select
-                                                                        name="staff_track_{{ $staffUser_Group->email }}"
+                                                                        name="student_track_{{ $studentUser_Group->email }}"
                                                                         id="track" class="form-select"
                                                                         aria-label="Default select example">
-                                                                        @if ($staffUser_Inner->track == 'programming')
+                                                                        @if ($studentUser_Inner->track == 'programming')
                                                                             <option value="programming" selected>SAD
                                                                             </option>
                                                                             <option value="networking">Network</option>
                                                                             <option value="security">IS</option>
                                                                         @endif
-                                                                        @if ($staffUser_Inner->track == 'networking')
+                                                                        @if ($studentUser_Inner->track == 'networking')
                                                                             <option value="programming">SAD</option>
                                                                             <option value="networking" selected>Network
                                                                             </option>
                                                                             <option value="security">IS</option>
                                                                         @endif
-                                                                        @if ($staffUser_Inner->track == 'security')
+                                                                        @if ($studentUser_Inner->track == 'security')
                                                                             <option value="programming">SAD</option>
                                                                             <option value="networking">Network</option>
                                                                             <option value="security" selected>IS</option>
                                                                         @endif
-
                                                                     </select>
                                                                 </td>
                                                                 <td>
                                                                     <select
-                                                                        name="staff_supervisor_{{ $staffUser_Group->email }}"
+                                                                        name="student_sv_{{ $studentUser_Group->email }}"
                                                                         id="track" class="form-select"
                                                                         aria-label="Default select example">
-                                                                        @if ($staffUser_Inner->can_supervise == '1')
-                                                                            <option value="1" selected>Supervisor
-                                                                            </option>
-                                                                            <option value="0">None</option>
-                                                                        @endif
-                                                                        @if ($staffUser_Inner->can_supervise == '0')
-                                                                            <option value="1">Supervisor</option>
-                                                                            <option value="0" selected>None
-                                                                            </option>
-                                                                        @endif
-                                                                    </select>
-                                                                </td>
-                                                                <td>
-                                                                    <p class="text-xs font-weight-bold mb-0">
-                                                                        @foreach ($staffStudents as $iteratedStudentsStaffList)
-                                                                            @if ($iteratedStudentsStaffList->email_staff == $staffUser_Group->email &&
-                                                                                $iteratedStudentsStaffList->is_confirmed == '0')
-                                                                                @foreach ($students as $iteratedStudent)
-                                                                                    @if ($iteratedStudent->email == $iteratedStudentsStaffList->email)
-                                                                                        {{ $iteratedStudent->matric_number }}<br>
-                                                                                    @endif
-                                                                                @endforeach
-                                                                            @else
-                                                                                None<br>
+                                                                        <?php $currentStaffEmailInStudent = ''; ?>
+                                                                        <?php $studentMatricNumber = ''; ?>
+                                                                        @foreach ($staffStudents as $studentInStaffList)
+                                                                            @if ($studentUser_Group->email == $studentInStaffList->email)
+                                                                                @if ($studentInStaffList->is_confirmed == '1')
+                                                                                    <?php $currentStaffEmailInStudent = $studentInStaffList->email_staff; ?>
+                                                                                    <option
+                                                                                        value="{{ $studentInStaffList->email_staff }}"
+                                                                                        selected>
+                                                                                        {{ $studentInStaffList->email_staff }}
+                                                                                    </option>
+                                                                                    <option value="None">None
+                                                                                    </option>
+                                                                                @else
+                                                                                    <option value="None" selected>None
+                                                                                    </option>
+                                                                                @break
                                                                             @endif
-                                                                        @endforeach
-                                                                    </p>
-                                                                </td>
-                                                                <td>
-                                                                    <p class="text-xs font-weight-bold mb-0">
-                                                                        @foreach ($staffStudents as $iteratedStudentsStaffList)
-                                                                            @if ($iteratedStudentsStaffList->email_staff == $staffUser_Group->email &&
-                                                                                $iteratedStudentsStaffList->is_confirmed == '1')
-                                                                                @foreach ($students as $iteratedStudent)
-                                                                                    @if ($iteratedStudent->email == $iteratedStudentsStaffList->email)
-                                                                                        {{ $iteratedStudent->matric_number }}<br>
-                                                                                    @endif
-                                                                                @endforeach
-                                                                            @else
-                                                                                None<br>
-                                                                            @endif
-                                                                        @endforeach
-                                                                    </p>
-                                                                </td>
+                                                                        @endif
+                                                                    @endforeach
+                                                                    @foreach ($staffMain as $mainStaffList)
+                                                                        @if ($mainStaffList->can_supervise && $mainStaffList->email != $currentStaffEmailInStudent)
+                                                                            <option
+                                                                                value="{{ $mainStaffList->email }}">
+                                                                                {{ $mainStaffList->email }} </option>
+                                                                        @endif
+                                                                    @endforeach
+                                                                </select>
+                                                            </td>
+                                                            <td>
+                                                                <p class="text-xs font-weight-bold mb-0">
+                                                                    <input
+                                                                        value="{{ $studentUser_Inner->matric_number }}"
+                                                                        type="text" class="form-control"
+                                                                        name="student_matric_number_{{ $studentUser_Inner->email }}"
+                                                                        aria-describedby="emailHelp"
+                                                                        placeholder="Matric Number">
+                                                                </p>
+                                                            </td>
+
+                    </form>
+                    <td class="align-middle">
+                        <form id="delete-form-{{ $studentUser_Group->id }}" method="POST"
+                            action="{{ route('user_delete_all') }}">
+                            @csrf
+                            @method('DELETE')
+                            <input type="hidden" name="email" value="{{ $studentUser_Group->email }}">
+                            <button type="button" class="btn btn-danger btn-sm"
+                                id="submit-button-{{ $studentUser_Group->id }}"
+                                data-email="{{ $studentUser_Group->email }}"
+                                onclick="deleteRow(this)">Delete</button>
+                            <br>
+                            <button type="button" class="btn btn-danger btn-sm"
+                                data-email="{{ $studentUser_Group->email }}"
+                                onclick="updatePassword(this)">Password</button>
                         </form>
-                        <td class="align-middle">
-                            <form id="delete-form-{{ $staffUser_Group->id }}" method="POST"
-                                action="{{ route('user_delete_all') }}">
-                                @csrf
-                                @method('DELETE')
-                                <input type="hidden" name="email" value="{{ $staffUser_Group->email }}">
-                                <button type="button" class="btn btn-danger btn-sm"
-                                    id="submit-button-{{ $staffUser_Group->id }}"
-                                    data-email="{{ $staffUser_Group->email }}" onclick="deleteRow(this)">Delete</button>
-                                <br>
-                                <button type="button" class="btn btn-danger btn-sm"
-                                    data-email="{{ $staffUser_Group->email }}"
-                                    onclick="updatePassword(this)">Password</button>
-                            </form>
-                        </td>
-                        </tr>
-                        @endif
-                        @endforeach
-                        @endif
-                        @endforeach
-                        </tbody>
-                        </table>
-                        <script>
-                            function deleteRow(button) {
-                                if (confirm('Are you sure you want to delete this user?')) {
-                                    $.ajax({
-                                        type: 'DELETE',
-                                        url: '../api/user_delete_all',
-                                        data: {
-                                            email: button.getAttribute('data-email')
-                                        },
-                                        success: function(response) {
+                    </td>
+                    </tr>
+                    @endif
+                    @endforeach
+                    @endif
+                    @endforeach
+                    </tbody>
+                    </table>
+                    <script>
+                        function deleteRow(button) {
+                            if (confirm('Are you sure you want to delete this user?')) {
+                                $.ajax({
+                                    type: 'DELETE',
+                                    url: '../api/user_delete_all',
+                                    data: {
+                                        email: button.getAttribute('data-email')
+                                    },
+                                    success: function(response) {
 
-                                            document.getElementById('admin_row_' + button.getAttribute('data-email')).setAttribute(
-                                                'hidden', true);
-                                            button.innerHTML = "Deleted";
-                                            // Add a disabled attribute to the button to prevent further clicks
-                                            button.setAttribute("class", "btn btn-secondary btn-sm");
-                                            button.setAttribute("disabled", "disabled");
-                                        },
-                                        error: function(response) {
-                                            console.log(response);
-                                        }
-                                    });
-                                }
+                                        document.getElementById('admin_row_' + button.getAttribute('data-email')).setAttribute(
+                                            'hidden', true);
+                                        button.innerHTML = "Deleted";
+                                        // Add a disabled attribute to the button to prevent further clicks
+                                        button.setAttribute("class", "btn btn-secondary btn-sm");
+                                        button.setAttribute("disabled", "disabled");
+                                    },
+                                    error: function(response) {
+                                        console.log(response);
+                                    }
+                                });
+                            }
+                        }
+
+                        function updatePassword(button) {
+                            let passwords = prompt("Set new password", "newpasswordhere");
+                            if (passwords != null) {
+                                $.ajax({
+                                    type: 'POST',
+                                    url: '../api/user_update_password',
+                                    data: {
+                                        email: button.getAttribute('data-email'),
+                                        password: passwords,
+                                    },
+                                    success: function(response) {
+                                        alert('Password Changed');
+                                    },
+                                    error: function(response) {
+                                        alert('Error Changing Password');
+                                    }
+                                });
+                            }
+                        }
+
+                        function upDateField(button) {
+
+                            if (confirm("Confirm update all the field?")) {
+                                $.ajax({
+                                    type: 'POST',
+                                    url: '../api/user_update_password',
+                                    data: {
+                                        email: button.getAttribute('data-email'),
+                                        password: passwords,
+                                    },
+                                    success: function(response) {
+                                        alert('Password Changed');
+                                    },
+                                    error: function(response) {
+                                        alert('Error Changing Password');
+                                    }
+                                });
                             }
 
-                            function updatePassword(button) {
-                                let passwords = prompt("Set new password", "newpasswordhere");
-                                if (passwords != null) {
-                                    $.ajax({
-                                        type: 'POST',
-                                        url: '../api/user_update_password',
-                                        data: {
-                                            email: button.getAttribute('data-email'),
-                                            password: passwords,
-                                        },
-                                        success: function(response) {
-                                            alert('Password Changed');
-                                        },
-                                        error: function(response) {
-                                            alert('Error Changing Password');
-                                        }
-                                    });
-                                }
-                            }
-
-                            function upDateField(button) {
-
-                                if (confirm("Confirm update all the field?")) {
-                                    $.ajax({
-                                        type: 'POST',
-                                        url: '../api/user_update_password',
-                                        data: {
-                                            email: button.getAttribute('data-email'),
-                                            password: passwords,
-                                        },
-                                        success: function(response) {
-                                            alert('Password Changed');
-                                        },
-                                        error: function(response) {
-                                            alert('Error Changing Password');
-                                        }
-                                    });
-                                }
-
-                            }
-                        </script>
-                    </div>
-                </div>
-            </div>
-
-            <footer class="footer pt-3  ">
-                <div class="container-fluid">
-                    <br><br><br><br><br>
-
-                </div>
-            </footer>
-        </div>
-        </div>
-        <div class="fixed-plugin">
-            <a class="fixed-plugin-button text-dark position-fixed px-3 py-2">
-                <i class="fa fa-cog py-2"> </i>
-            </a>
-            <div class="card shadow-lg">
-                <div class="card-header pb-0 pt-3 ">
-                    <div class="float-start">
-                        <h5 class="mt-3 mb-0">Configuration</h5>
-                        <p>Turn on and off night mode.</p>
-                    </div>
-                    <div class="float-end mt-4">
-                        <button class="btn btn-link text-dark p-0 fixed-plugin-close-button">
-                            <i class="fa fa-close"></i>
-                        </button>
-                    </div>
-                    <!-- End Toggle Button -->
-                </div>
-                <hr class="horizontal dark my-1">
-                <div class="card-body pt-sm-3 pt-0 overflow-auto">
-                    <div class="mt-2 mb-5 d-flex">
-                        <h6 class="mb-0">Light / Dark</h6>
-                        <div class="form-check form-switch ps-0 ms-auto my-auto">
-                            <input class="form-check-input mt-1 ms-auto" type="checkbox" id="dark-version"
-                                onclick="darkMode(this)">
-                        </div>
-                    </div>
-                    <div class="w-100 text-center">
-                        <a class="github-button" href="https://github.com/creativetimofficial/argon-dashboard"
-                            data-icon="octicon-star" data-size="large" data-show-count="true"
-                            aria-label="Star creativetimofficial/argon-dashboard on GitHub">Star</a>
-                        <h6 class="mt-3">Thank you for sharing!</h6>
-                        <a href="https://twitter.com/intent/tweet?text=Check%20Argon%20Dashboard%20made%20by%20%40CreativeTim%20%23webdesign%20%23dashboard%20%23bootstrap5&amp;url=https%3A%2F%2Fwww.creative-tim.com%2Fproduct%2Fargon-dashboard"
-                            class="btn btn-dark mb-0 me-2" target="_blank">
-                            <i class="fab fa-twitter me-1" aria-hidden="true"></i> Tweet
-                        </a>
-                        <a href="https://www.facebook.com/sharer/sharer.php?u=https://www.creative-tim.com/product/argon-dashboard"
-                            class="btn btn-dark mb-0 me-2" target="_blank">
-                            <i class="fab fa-facebook-square me-1" aria-hidden="true"></i> Share
-                        </a>
-                    </div>
+                        }
+                    </script>
                 </div>
             </div>
         </div>
-        <!--   Core JS Files   -->
-        <script src="../assets/js/core/popper.min.js"></script>
-        <script src="../assets/js/core/bootstrap.min.js"></script>
-        <script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
-        <script src="../assets/js/plugins/smooth-scrollbar.min.js"></script>
-        <script>
-            var win = navigator.platform.indexOf('Win') > -1;
-            if (win && document.querySelector('#sidenav-scrollbar')) {
-                var options = {
-                    damping: '0.5'
-                }
-                Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+
+        <footer class="footer pt-3  ">
+            <div class="container-fluid">
+                <br><br><br><br><br>
+
+            </div>
+        </footer>
+    </div>
+    </div>
+    <div class="fixed-plugin">
+        <a class="fixed-plugin-button text-dark position-fixed px-3 py-2">
+            <i class="fa fa-cog py-2"> </i>
+        </a>
+        <div class="card shadow-lg">
+            <div class="card-header pb-0 pt-3 ">
+                <div class="float-start">
+                    <h5 class="mt-3 mb-0">Configuration</h5>
+                    <p>Turn on and off night mode.</p>
+                </div>
+                <div class="float-end mt-4">
+                    <button class="btn btn-link text-dark p-0 fixed-plugin-close-button">
+                        <i class="fa fa-close"></i>
+                    </button>
+                </div>
+                <!-- End Toggle Button -->
+            </div>
+            <hr class="horizontal dark my-1">
+            <div class="card-body pt-sm-3 pt-0 overflow-auto">
+                <div class="mt-2 mb-5 d-flex">
+                    <h6 class="mb-0">Light / Dark</h6>
+                    <div class="form-check form-switch ps-0 ms-auto my-auto">
+                        <input class="form-check-input mt-1 ms-auto" type="checkbox" id="dark-version"
+                            onclick="darkMode(this)">
+                    </div>
+                </div>
+                <div class="w-100 text-center">
+                    <a class="github-button" href="https://github.com/creativetimofficial/argon-dashboard"
+                        data-icon="octicon-star" data-size="large" data-show-count="true"
+                        aria-label="Star creativetimofficial/argon-dashboard on GitHub">Star</a>
+                    <h6 class="mt-3">Thank you for sharing!</h6>
+                    <a href="https://twitter.com/intent/tweet?text=Check%20Argon%20Dashboard%20made%20by%20%40CreativeTim%20%23webdesign%20%23dashboard%20%23bootstrap5&amp;url=https%3A%2F%2Fwww.creative-tim.com%2Fproduct%2Fargon-dashboard"
+                        class="btn btn-dark mb-0 me-2" target="_blank">
+                        <i class="fab fa-twitter me-1" aria-hidden="true"></i> Tweet
+                    </a>
+                    <a href="https://www.facebook.com/sharer/sharer.php?u=https://www.creative-tim.com/product/argon-dashboard"
+                        class="btn btn-dark mb-0 me-2" target="_blank">
+                        <i class="fab fa-facebook-square me-1" aria-hidden="true"></i> Share
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--   Core JS Files   -->
+    <script src="../assets/js/core/popper.min.js"></script>
+    <script src="../assets/js/core/bootstrap.min.js"></script>
+    <script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
+    <script src="../assets/js/plugins/smooth-scrollbar.min.js"></script>
+    <script>
+        var win = navigator.platform.indexOf('Win') > -1;
+        if (win && document.querySelector('#sidenav-scrollbar')) {
+            var options = {
+                damping: '0.5'
             }
-        </script>
-        <!-- Github buttons -->
-        <script async defer src="https://buttons.github.io/buttons.js"></script>
-        <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
-        <script src="../assets/js/argon-dashboard.min.js?v=2.0.4"></script>
-    </body>
+            Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+        }
+    </script>
+    <!-- Github buttons -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
+    <script src="../assets/js/argon-dashboard.min.js?v=2.0.4"></script>
+</body>
 
-    </html>
+</html>
 @endsection

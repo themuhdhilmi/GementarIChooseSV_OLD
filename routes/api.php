@@ -30,8 +30,12 @@ Route::post('rstud', [App\Http\Controllers\UserController::class, 'createStudent
 Route::post('radmin', [App\Http\Controllers\UserController::class, 'createAdmin'])->name('radmin');
 // Create new Staff
 Route::post('rstaff', [App\Http\Controllers\UserController::class, 'createStaff'])->name('rstaff');
-// Create new Staff
+// Update Staff
 Route::post('updateStaff', [App\Http\Controllers\UserController::class, 'updateStaff'])->name('updateStaff');
+// Bulk Create new Staff
+Route::post('bulkCreateStaff', [App\Http\Controllers\UserController::class, 'bulkCreateStaff'])->name('bulkCreateStaff');
+// Update Student
+Route::post('updateStudent', [App\Http\Controllers\UserController::class, 'updateStudent'])->name('updateStudent');
 
 Route::put('global_admins', [App\Http\Controllers\GlobalAdminController::class, 'update']);
 
