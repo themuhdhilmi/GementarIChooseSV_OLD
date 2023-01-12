@@ -40,7 +40,7 @@
             <div class="sidenav-header">
                 <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none"
                     aria-hidden="true" id="iconSidenav"></i>
-                <a class="navbar-brand m-0" href=" https://demos.creative-tim.com/argon-dashboard/pages/dashboard.html "
+                <a class="navbar-brand m-0" href=" {{  route('home') }} "
                     target="_blank">
                     <img src="../assets/img/logo-ct-dark.png" class="navbar-brand-img h-100" alt="main_logo">
                     <span class="ms-1 font-weight-bold">Daftar Projek</span>
@@ -65,6 +65,15 @@
                                 <i class="ni ni-tv-2 text-primary text-sm opacity-10"></i>
                             </div>
                             <span class="nav-link-text ms-1">Manage Admin</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('admin_page', ['id' => 'global_value']) }}">
+                            <div
+                                class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                                <i class="ni ni-tv-2 text-primary text-sm opacity-10"></i>
+                            </div>
+                            <span class="nav-link-text ms-1">Global Value</span>
                         </a>
                     </li>
                     <li class="nav-item mt-3">
@@ -316,13 +325,12 @@
                                 <span class="text-xs">student can accept/decline their supervisee</span>
                                 <hr class="horizontal dark my-3">
 
-                                <form id="form" method="POST" action="{{ route('rstaff') }}">
+                                <form id="form" method="POST" action="{{ route('rstud') }}">
                                     @csrf
                                     <label for="example-text-input">Matric Number</label>
                                     <input name="num_matric" class="form-control" type="text" required>
                                     <label for="example-text-input">Full Name</label>
                                     <input name="full_name" class="form-control" type="text" required>
-
                                     <label for="example-text-input">Track</label>
                                     <select name="track" id="track" class="form-select"
                                         aria-label="Default select example">
@@ -354,7 +362,7 @@
                                                 // Show countdown message
                                                 var countdown = 5;
                                                 setInterval(function() {
-                                                    $('#form-message').append(
+                                                    $('#form-message').html(
                                                         '<div class="alert alert-success">Redirecting in ' + countdown +
                                                         ' seconds...</div>');
                                                     countdown--;
@@ -439,7 +447,7 @@
                                                                 <td>
                                                                     <p class="text-xs font-weight-bold mb-0">
                                                                         <input value="{{ $studentUser_Group->email }}"
-                                                                            type="text" class="form-control"
+                                                                            type="email" class="form-control"
                                                                             name="student_email_{{ $studentUser_Group->email }}"
                                                                             aria-describedby="emailHelp"
                                                                             placeholder="Enter email">

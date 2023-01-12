@@ -3,6 +3,20 @@
 
 
 @section('content')
+    <!--
+        =========================================================
+        * Argon Dashboard 2 - v2.0.4
+        =========================================================
+
+        * Product Page: https://www.creative-tim.com/product/argon-dashboard
+        * Copyright 2022 Creative Tim (https://www.creative-tim.com)
+        * Licensed under MIT (https://www.creative-tim.com/license)
+        * Coded by Creative Tim
+
+        =========================================================
+
+        * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+        -->
     <style type="text/css">
         html {
             overflow-y: hidden;
@@ -40,7 +54,7 @@
             <div class="sidenav-header">
                 <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none"
                     aria-hidden="true" id="iconSidenav"></i>
-                    <a class="navbar-brand m-0" href=" {{  route('home') }} "
+                <a class="navbar-brand m-0" href=" {{  route('home') }} "
                     target="_blank">
                     <img src="../assets/img/logo-ct-dark.png" class="navbar-brand-img h-100" alt="main_logo">
                     <span class="ms-1 font-weight-bold">Daftar Projek</span>
@@ -50,7 +64,7 @@
             <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('admin_page', ['id' => 'dashboard']) }}">
+                        <a class="nav-link " href="{{ route('admin_page', ['id' => 'dashboard']) }}">
                             <div
                                 class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                                 <i class="ni ni-tv-2 text-primary text-sm opacity-10"></i>
@@ -59,7 +73,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="{{ route('admin_page', ['id' => 'manage_admin']) }}">
+                        <a class="nav-link" href="{{ route('admin_page', ['id' => 'manage_admin']) }}">
                             <div
                                 class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                                 <i class="ni ni-tv-2 text-primary text-sm opacity-10"></i>
@@ -68,7 +82,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('admin_page', ['id' => 'global_value']) }}">
+                        <a class="nav-link active" href="{{ route('admin_page', ['id' => 'global_value']) }}">
                             <div
                                 class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                                 <i class="ni ni-tv-2 text-primary text-sm opacity-10"></i>
@@ -310,199 +324,42 @@
             <!-- ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
             <div class="container-fluid py-4">
                 <div class="row">
+                    <div class="col-md-4 py-2"></div>
 
-                    <div class="col-md-4 py-2">
-                        <div class="card">
-                            <div class="card-header mx-4 p-3 text-center">
-                                <div
-                                    class="icon icon-shape icon-lg bg-gradient-primary shadow text-center border-radius-lg">
-                                    <i class="fas fa-duotone fa-quote-left"></i>
+
+                        <div class="col-md-4 py-2">
+                            <div class="card">
+
+                                @if (isset($_GET['message']))
+                                    @if ($_GET['message'] == 'success')
+                                            <div class="alert alert-success" role="alert">
+                                                Successfully Updated
+                                            </div>
+                                    @endif
+                                @endif
+
+                                <div class="card-header mx-4 p-3 text-center">
+                                    <div
+                                        class="icon icon-shape icon-lg bg-gradient-primary shadow text-center border-radius-lg">
+                                        <i class="fas fa-duotone fa-quote-left"></i>
+                                    </div>
+                                </div>
+                                <div class="card-body pt-0 p-3 text-center">
+                                    <form id="form" method="POST" action="{{ route('upd_global_val') }}">
+                                        @csrf
+                                        <label for="example-text-input">Session</label>
+                                        <input name="session" class="form-control" type="text" value="{{ $globalAdmin->session }}" required>
+                                        <label for="example-text-input">Supervisor Quota</label>
+                                        <input name="quota" class="form-control" type="number" value="{{ $globalAdmin->quota }}" required>
+                                        <label for="example-text-input"> </label>
+                                        <button type="submit" class="btn btn-primary btn-sm mb-0 w-100" id="submit-button">Update</button>
+                                    </form>
                                 </div>
                             </div>
-                            <div class="card-body pt-0 p-3 text-center">
-                                <div id="form-message" class="mt-3"></div>
-                                <h6 class="text-center mb-0">Admin add</h6>
-                                <span class="text-xs">admin can manage students and staff</span>
-                                <hr class="horizontal dark my-3">
-
-                                <form id="form" method="POST" action="{{ route('radmin') }}">
-                                    @csrf
-                                    <label for="example-text-input">Email</label>
-                                    <input name="email" class="form-control" type="email" required>
-                                    <label for="example-text-input">Full Name</label>
-                                    <input name="name" class="form-control" type="text" required>
-                                    <label for="example-text-input">Password</label>
-                                    <input name="password" class="form-control" type="password" required minlength="8">
-                                    <label for="example-text-input"> </label>
-                                    <button type="submit" class="btn btn-primary btn-sm mb-0 w-100"
-                                        id="submit-button">Add User</button>
-                                </form>
-
-                                <div id="form-message" class="mt-3"></div>
-
-                                <script>
-                                    $('#form').on('submit', function(e) {
-                                        e.preventDefault();
-
-                                        $.ajax({
-                                            type: 'POST',
-                                            url: $(this).attr('action'),
-                                            data: $(this).serialize(),
-                                            success: function(response) {
-                                                $('#form-message').html('<div class="alert alert-success">' + 'success' + '</div>');
-
-                                                // Show countdown message
-                                                var countdown = 5;
-                                                setInterval(function() {
-                                                    $('#form-message').html(
-                                                        '<div class="alert alert-success">Redirecting in ' + countdown +
-                                                        ' seconds...</div>');
-                                                    countdown--;
-                                                }, 1000);
-
-                                                // Redirect to same page after 3 seconds
-                                                setTimeout(function() {
-                                                    window.location = window.location.href;
-                                                }, 5000);
-                                            },
-                                            error: function(response) {
-                                                $('#form-message').html('<div class="alert alert-danger">' + response.responseJSON
-                                                    .message + '</div>');
-                                            }
-                                        });
-                                    });
-                                </script>
-
-                                {{-- <style>
-                                    $(function(){
-                                    $("form-id").submit(function(){
-                                        $.post($(this).attr("action"), $(this).serialize(), function(jsonData){
-                                        console.log(jsonData);
-                                        }, "json");
-                                    });
-                                    });
-                                </style> --}}
-
-                            </div>
                         </div>
-                    </div>
-                    <div class="col-md-8 py-2">
-                        <div class="card">
-                            <div class="card-header mx-4 p-3 text-center">
-                                <div
-                                    class="icon icon-shape icon-lg bg-gradient-primary shadow text-center border-radius-lg">
-                                    <i class="fas fa-duotone fa-quote-left"></i>
-                                </div>
-                            </div>
-                            <div class="card-body pt-0 p-3 text-center">
-                                <h6 class="text-center mb-0">Admin list</h6>
-                                <span class="text-xs">list of all admin here</span>
-                                <hr class="horizontal dark my-3">
-                                <div id="form-message" class="mt-3"></div>
-                                <table class="table align-items-center mb-0">
-                                    <tbody>
-                                        @foreach ($MainUser as $adminuser_loop)
-                                            @if ($adminuser_loop->role == 'Admin')
-                                                <tr id='admin_row_{{ $adminuser_loop->email }}'>
-                                                    <td>
-                                                        <div class="d-flex px-2 py-1">
-                                                            <div><img
-                                                                    src="https://cdn-icons-png.flaticon.com/512/270/270023.png"
-                                                                    class="avatar avatar-sm me-3" alt="user6"></div>
-                                                            <div class="d-flex flex-column justify-content-center">
-                                                                <h6 class="mb-0 text-sm">{{ $adminuser_loop->name }}</h6>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <p class="text-xs font-weight-bold mb-0">
-                                                            {{ $adminuser_loop->email }}</p>
-                                                    </td>
-
-                                                    <td class="align-middle">
-                                                        {{-- <a href="javascript:;"
-                                                            class="text-secondary font-weight-bold text-xs"
-                                                            data-toggle="tooltip" data-original-title="Edit user">
-                                                            @if ($adminuser_loop->id != '1')
-                                                                Delete
-                                                            @endif
-                                                        </a> --}}
-                                                        <form id="delete-form-{{ $adminuser_loop->id }}" method="POST"
-                                                            action="{{ route('user_delete_all') }}">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <input type="hidden" name="email"
-                                                                value="{{ $adminuser_loop->email }}">
-                                                            <!-- Other form fields go here -->
-                                                            @if ($adminuser_loop->id != '1')
-                                                                <button type="button" class="btn btn-danger btn-sm"
-                                                                    id="submit-button-{{ $adminuser_loop->id }}"
-                                                                    data-email="{{ $adminuser_loop->email }}"
-                                                                    onclick="deleteRow(this)">Delete</button>
-
-                                                                <button type="button" class="btn btn-danger btn-sm"
-                                                                    data-email="{{ $adminuser_loop->email }}"
-                                                                    onclick="updatePassword(this)">Password</button>
-                                                            @endif
 
 
-                                                        </form>
-                                                    </td>
-                                                </tr>
-                                            @endif
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                                <script>
-                                    function deleteRow(button) {
-                                        if (confirm('Are you sure you want to delete this user?')) {
-                                            $.ajax({
-                                                type: 'DELETE',
-                                                url: '../api/user_delete_all',
-                                                data: {
-                                                    email: button.getAttribute('data-email')
-                                                },
-                                                success: function(response) {
-
-                                                    document.getElementById('admin_row_' + button.getAttribute('data-email')).setAttribute(
-                                                        'hidden', true);
-                                                    button.innerHTML = "Deleted";
-                                                    // Add a disabled attribute to the button to prevent further clicks
-                                                    button.setAttribute("class", "btn btn-secondary btn-sm");
-                                                    button.setAttribute("disabled", "disabled");
-                                                },
-                                                error: function(response) {
-                                                    console.log(response);
-                                                }
-                                            });
-                                        }
-
-                                    }
-
-                                    function updatePassword(button) {
-                                        let passwords = prompt("Set new password", "newpasswordhere");
-                                        if (passwords != null) {
-                                            $.ajax({
-                                                type: 'POST',
-                                                url: '../api/user_update_password',
-                                                data: {
-                                                    email: button.getAttribute('data-email'),
-                                                    password: passwords,
-                                                },
-                                                success: function(response) {
-                                                    alert('Password Changed');
-                                                },
-                                                error: function(response) {
-                                                    alert('Error Changing Password');
-                                                }
-                                            });
-                                        }
-
-                                    }
-                                </script>
-                            </div>
-                        </div>
-                    </div>
+                    <div class="col-md-4 py-2"></div>
 
                     <footer class="footer pt-3  ">
                         <div class="container-fluid">

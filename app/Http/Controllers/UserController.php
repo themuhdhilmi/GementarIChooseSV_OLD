@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\GlobalAdmin;
 use App\Models\StaffInfo;
 use App\Models\StaffMain;
 use App\Models\StaffStudent;
@@ -15,40 +16,6 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    public function createStudent(Request $request)
-    {
-        // Validate the request data
-        $request->validate([
-            'email' => 'required|string|email|unique:users',
-            'password' => 'required|string|min:8',
-            'matric_number' => 'required|string',
-            'track' => 'required|string',
-            'session' => 'nullable|string',
-        ]);
-
-        // Create the new user
-        $user = new User();
-        $user->name = $request->input('full_name');
-        $user->email = $request->input('email');
-        $user->password = Hash::make($request->input('password'));
-        $user->role = 'Student';
-        $user->save();
-
-
-        $student = new StudentMain();
-        $student->email = $user->email;
-        $student->matric_number = $request->input('matric_number');
-        $student->track = $request->input('track');
-        $student->session = $request->input('session');
-        $student->save();
-
-        $studentList = new StaffStudent();
-        $studentList->email = $user->email;
-        $studentList->save();
-
-        return response()->json($user, 201);
-    }
-
     public function createAdmin(Request $request)
     {
         // Validate the request data
@@ -68,6 +35,71 @@ class UserController extends Controller
 
 
         return response()->json($user, 201);
+    }
+
+    public function userDelete(Request $request)
+    {
+        // Validate the request data
+        $request->validate([
+            'email' => 'required|string|email',
+        ]);
+
+        /*
+        *
+        * Delete the users
+        *
+        */
+        $user = User::where('email', $request->input('email'))->first();
+        // If the user does not exist, return a 404 error
+        if (!$user) {
+            return response()->json(['message' => 'User not found'], 404);
+        }
+        // Delete the user from the users table
+        $user->delete();
+
+        /*
+        *
+        * Delete the users in Staffs
+        *
+        */
+        StaffMain::where('email', $request->input('email'))->delete();
+        StaffInfo::where('email', $request->input('email'))->delete();
+        StaffStudent::where('email', $request->input('email'))->delete();
+        //Should set email_staff to empty instead of deleted it.
+        StaffStudent::where('email_staff',  $request->input('email'))->update([
+            'email_staff' => '',
+            'is_confirmed' => 0
+        ]);
+
+        /*
+        *
+        * Delete the users in Students
+        *
+        */
+        StudentMain::where('email', $request->input('email'))->delete();
+        StudentList::where('email', $request->input('email'))->delete();
+
+        return response()->json([
+            'message' => 'User successfully deleted'
+        ], 200);
+    }
+
+    public function userUpdatePassword(Request $request)
+    {
+        // Validate the request data
+        $request->validate([
+            'email' => 'required|string',
+            'password' => 'required|string|min:8',
+        ]);
+
+        // Find the user by email
+        $user = User::where('email', $request->input('email'))->first();
+
+        // Update the password
+        $user->password = Hash::make($request->input('password'));
+        $user->save();
+
+        return response()->json($user, 200);
     }
 
     public function createStaff(Request $request)
@@ -104,59 +136,6 @@ class UserController extends Controller
         return response()->json($user, 201);
     }
 
-    public function userDelete(Request $request)
-    {
-        // Validate the request data
-        $request->validate([
-            'email' => 'required|string|email',
-        ]);
-
-        // Find the user with the given email
-        $user = User::where('email', $request->input('email'))->first();
-
-        // If the user does not exist, return a 404 error
-        if (!$user) {
-            return response()->json(['message' => 'User not found'], 404);
-        }
-
-        // Delete the user from the users table
-        $user->delete();
-
-        // Delete the staff (if any)
-        StaffMain::where('email', $request->input('email'))->delete();
-        StudentMain::where('email', $request->input('email'))->delete();
-        StudentList::where('email', $request->input('email'))->delete();
-
-        // Delete the student from the student list (if any)
-        StaffMain::where('email', $request->input('email'))->delete();
-        StaffStudent::where('email', $request->input('email'))->delete();
-        StaffStudent::where('email_staff', $request->input('email'))->delete();
-        //StaffInfo::where('email', $request->input('email'))->delete();
-
-
-        return response()->json([
-            'message' => 'User successfully deleted'
-        ], 200);
-    }
-
-    public function userUpdatePassword(Request $request)
-    {
-        // Validate the request data
-        $request->validate([
-            'email' => 'required|string',
-            'password' => 'required|string|min:8',
-        ]);
-
-        // Find the user by email
-        $user = User::where('email', $request->input('email'))->first();
-
-        // Update the password
-        $user->password = Hash::make($request->input('password'));
-        $user->save();
-
-        return response()->json($user, 200);
-    }
-
     public function updateStaff(Request $request)
     {
 
@@ -180,21 +159,39 @@ class UserController extends Controller
             // Find the user by email
             $user = User::where('email', $data['current_email'])->first();
 
+            $trimmedEmail = trim($data['form_input_email']);
+
             if ($user) {
                 // Update the user name
                 $user->name = $data['form_input_name'];
-                $user->email = $data['form_input_email'];
+                $user->email = $trimmedEmail;
                 $user->save();
 
                 // Find the StaffMain model by email
                 $staff = StaffMain::where('email', $data['current_email'])->first();
                 if ($staff) {
                     //Update the StaffMain model
-                    $staff->email = $data['form_input_email'];
+                    $staff->email = $trimmedEmail;
                     $staff->track = $data['form_input_track'];
                     $staff->can_supervise = $data['form_input_supervisor_status'];
                     $staff->save();
                 }
+
+                if($data['form_input_supervisor_status'] == '0')
+                {
+                    StaffStudent::where('email_staff', $data['current_email'])->update([
+                        'email_staff' => '',
+                        'is_confirmed' => 0
+                    ]);
+                }
+                else
+                {
+                    StaffStudent::where('email_staff', $data['current_email'])->update([
+                        'email_staff' => $trimmedEmail,
+                        'is_confirmed' => 0
+                    ]);
+                }
+
             }
         }
 
@@ -288,6 +285,46 @@ class UserController extends Controller
         return response()->json(['succes' => $sucess, 'error' => $error], 201);
     }
 
+    public function createStudent(Request $request)
+    {
+        // Validate the request data
+        $request->validate([
+            'password' => 'required|string|min:8',
+            'num_matric' => 'required|string',
+            'full_name' => 'required|string',
+            'track' => 'required|string',
+            'session' => 'nullable|string',
+        ]);
+
+        $trimmedNumMatric = str_replace(' ', '', $request->input('num_matric'));
+
+        // Create the new user
+        $user = new User();
+        $user->name = $request->input('full_name');
+        $user->email = $trimmedNumMatric . "@student.puo.edu.my";
+        $user->password = Hash::make($request->input('password'));
+        $user->role = 'Student';
+        $user->save();
+
+        // Create Student
+        $student = new StudentMain();
+        $student->email = $user->email;
+        $student->matric_number = $trimmedNumMatric;
+        $student->track = $request->input('track');
+
+        // Get session from global admin
+        $sessionFromGlobalAdmin = GlobalAdmin::first()->session;
+        $student->session = $sessionFromGlobalAdmin;
+        $student->save();
+
+        // Create Student in Staff List (SV CHECKING).
+        $studentList = new StaffStudent();
+        $studentList->email = $user->email;
+        $studentList->save();
+
+        return response()->json($user, 201);
+    }
+
     public function updateStudent(Request $request)
     {
 
@@ -307,24 +344,26 @@ class UserController extends Controller
                 'form_input_student_matric_number_' => $request->input(str_replace(".", "_", 'student_matric_number_' . $model->email)),
             ];
 
-            //array_push($resultData,  $data);
         }
+
 
         foreach ($resultData as $data) {
             // Find the user by email
             $user = User::where('email', $data['current_email'])->first();
 
+            $trimmedNumMatric = str_replace(' ', '',  $data['form_input_email']);
+
             if ($user) {
                 // Update the user name
                 $user->name = $data['form_input_name'];
-                $user->email = $data['form_input_email'];
+                $user->email = $trimmedNumMatric;
                 $user->save();
 
                 // Find the StaffMain model by email
                 $student = StudentMain::where('email', $data['current_email'])->first();
                 if ($student) {
                     //Update the studentMain model
-                    $student->email = $data['form_input_email'];
+                    $student->email = $trimmedNumMatric;
                     $student->track = $data['form_input_track'];
                     $student->matric_number = $data['form_input_student_matric_number_'];
                     $student->save();
@@ -333,6 +372,9 @@ class UserController extends Controller
                 // Find the StaffMain model by email
                 $staffStudent = StaffStudent::where('email', $data['current_email'])->first();
                 if ($staffStudent) {
+
+                    $staffStudent->email = $data['form_input_email'];
+                    $staffStudent->save();
 
                     if($data['form_input_sv'] == 'None')
                     {

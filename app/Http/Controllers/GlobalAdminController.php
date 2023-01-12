@@ -28,6 +28,8 @@ class GlobalAdminController extends Controller
         $globalAdmin->quota = $request->input('quota');
         $globalAdmin->save();
 
-        return response()->json($globalAdmin);
+        //return response()->json($globalAdmin);
+
+        return redirect()->route('admin_page', ['id' => 'global_value', 'message' => 'success']);
     }
 }
