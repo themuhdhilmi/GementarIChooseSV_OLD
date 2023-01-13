@@ -28,26 +28,20 @@ Route::post('user_update_password', [App\Http\Controllers\UserController::class,
 //-----------------------------------------------------------------------------------------------------------------------------------
 // Create new admin
 Route::post('radmin', [App\Http\Controllers\UserController::class, 'createAdmin'])->name('radmin');
-// Update Admin
-Route::put('global_admins', [App\Http\Controllers\GlobalAdminController::class, 'update']);
 //-----------------------------------------------------------------------------------------------------------------------------------
 // Create new Staff
-Route::post('rstaff', [App\Http\Controllers\UserController::class, 'createStaff'])->name('rstaff');
+Route::post('rstaff', [App\Http\Controllers\StaffController::class, 'createStaff'])->name('rstaff');
 // Update Staff
-Route::post('updateStaff', [App\Http\Controllers\UserController::class, 'updateStaff'])->name('updateStaff');
+Route::post('updateStaff', [App\Http\Controllers\StaffController::class, 'updateStaff'])->name('updateStaff');
 // Bulk Create Staff
-Route::post('bulkCreateStaff', [App\Http\Controllers\UserController::class, 'bulkCreateStaff'])->name('bulkCreateStaff');
+Route::post('bulkCreateStaff', [App\Http\Controllers\StaffController::class, 'bulkCreateStaff'])->name('bulkCreateStaff');
 //-----------------------------------------------------------------------------------------------------------------------------------
 // Create new Student
-Route::post('rstud', [App\Http\Controllers\UserController::class, 'createStudent'])->name('rstud');
+Route::post('rstud', [App\Http\Controllers\StudentController::class, 'createStudent'])->name('rstud');
 // Update Student
-Route::post('updateStudent', [App\Http\Controllers\UserController::class, 'updateStudent'])->name('updateStudent');
+Route::post('updateStudent', [App\Http\Controllers\StudentController::class, 'updateStudent'])->name('updateStudent');
 // Bulk Create Student
-Route::post('bulkCreateStudent', [App\Http\Controllers\UserController::class, 'bulkCreateStudent'])->name('bulkCreateStudent');
-
-
-
-
+Route::post('bulkCreateStudent', [App\Http\Controllers\StudentController::class, 'bulkCreateStudent'])->name('bulkCreateStudent');
 
 // // Delete all user
 // Route::middleware('auth:sanctum')->delete('user_delete_all', [App\Http\Controllers\UserController::class, 'userDelete'])->name('user_delete_all');
