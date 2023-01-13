@@ -336,7 +336,7 @@
                                         aria-label="Default select example">
                                         <option value="programming" selected>Software & Application Development</option>
                                         <option value="networking">Networking System</option>
-                                        <option value="security">Information Technology</option>
+                                        <option value="security">Information Security</option>
                                     </select>
 
                                     <label for="example-text-input">Password</label>
