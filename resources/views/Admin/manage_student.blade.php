@@ -3,6 +3,7 @@
 
 
 @section('content')
+<title>JTMK Supervisor | Manage Student</title>
     <style type="text/css">
         html {
             overflow-y: hidden;
@@ -43,7 +44,7 @@
                 <a class="navbar-brand m-0" href=" {{  route('home') }} "
                     target="_blank">
                     <img src="../assets/img/logo-ct-dark.png" class="navbar-brand-img h-100" alt="main_logo">
-                    <span class="ms-1 font-weight-bold">Daftar Projek</span>
+                    <span class="ms-1 font-weight-bold">JTMK SUPERVISOR</span>
                 </a>
             </div>
             <hr class="horizontal dark mt-0">
@@ -631,8 +632,7 @@
         <div class="card shadow-lg">
             <div class="card-header pb-0 pt-3 ">
                 <div class="float-start">
-                    <h5 class="mt-3 mb-0">Configuration</h5>
-                    <p>Turn on and off night mode.</p>
+                    <h5 class="mt-3 mb-0">About</h5>
                 </div>
                 <div class="float-end mt-4">
                     <button class="btn btn-link text-dark p-0 fixed-plugin-close-button">
@@ -643,25 +643,16 @@
             </div>
             <hr class="horizontal dark my-1">
             <div class="card-body pt-sm-3 pt-0 overflow-auto">
-                <div class="mt-2 mb-5 d-flex">
-                    <h6 class="mb-0">Light / Dark</h6>
-                    <div class="form-check form-switch ps-0 ms-auto my-auto">
-                        <input class="form-check-input mt-1 ms-auto" type="checkbox" id="dark-version"
-                            onclick="darkMode(this)">
-                    </div>
-                </div>
+                <p>This project is created for Jabatan Teknologi Maklumat & Komunikasi Politeknik Ungku Omar.</p>
                 <div class="w-100 text-center">
-                    <a class="github-button" href="https://github.com/creativetimofficial/argon-dashboard"
-                        data-icon="octicon-star" data-size="large" data-show-count="true"
-                        aria-label="Star creativetimofficial/argon-dashboard on GitHub">Star</a>
-                    <h6 class="mt-3">Thank you for sharing!</h6>
-                    <a href="https://twitter.com/intent/tweet?text=Check%20Argon%20Dashboard%20made%20by%20%40CreativeTim%20%23webdesign%20%23dashboard%20%23bootstrap5&amp;url=https%3A%2F%2Fwww.creative-tim.com%2Fproduct%2Fargon-dashboard"
+                    <h6 class="mt-3">Check us out!</h6>
+                    <a href="https://gementar.com"
                         class="btn btn-dark mb-0 me-2" target="_blank">
-                        <i class="fab fa-twitter me-1" aria-hidden="true"></i> Tweet
+                        <i class="fab fa-earth-asia me-1" aria-hidden="true"></i> Website
                     </a>
-                    <a href="https://www.facebook.com/sharer/sharer.php?u=https://www.creative-tim.com/product/argon-dashboard"
+                    <a href="https://github.com/themuhdhilmi/daftartprojekjtmk"
                         class="btn btn-dark mb-0 me-2" target="_blank">
-                        <i class="fab fa-facebook-square me-1" aria-hidden="true"></i> Share
+                        <i class="fab fa-github-square me-1" aria-hidden="true"></i> Github
                     </a>
                 </div>
             </div>

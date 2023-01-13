@@ -29,11 +29,11 @@ class HomeController extends Controller
         }
         else if (auth()->check() && auth()->user()->role == 'Lecturer')
         {
-
+            return redirect()->route('staff_page', ['id' => 'dashboard']);
         }
         else if (auth()->check() && auth()->user()->role == 'Student')
         {
-
+            return redirect()->route('student_page', ['id' => 'dashboard']);
         }
 
     }

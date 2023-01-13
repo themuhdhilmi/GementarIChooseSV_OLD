@@ -40,7 +40,7 @@ Route::get('admin_page/{id}', function ($id) {
 
         if ($id == 'dashboard') {
 
-            return view('admin/dashboard',  [
+            return view('Admin/dashboard',  [
                 'globalAdmin' =>  $globalAdmin,
                 'students' => $students ,
                 'studentsList' => $studentsList,
@@ -53,7 +53,7 @@ Route::get('admin_page/{id}', function ($id) {
 
         if ($id == 'manage_admin') {
 
-            return view('admin/manage_admin',  [
+            return view('Admin/manage_admin',  [
                 'globalAdmin' =>  $globalAdmin,
                 'students' => $students ,
                 'studentsList' => $studentsList,
@@ -66,7 +66,7 @@ Route::get('admin_page/{id}', function ($id) {
 
         if ($id == 'manage_staff') {
 
-            return view('admin/manage_staff',  [
+            return view('Admin/manage_staff',  [
                 'globalAdmin' =>  $globalAdmin,
                 'students' => $students ,
                 'studentsList' => $studentsList,
@@ -79,7 +79,7 @@ Route::get('admin_page/{id}', function ($id) {
 
         if ($id == 'bulk_add_staff') {
 
-            return view('admin/bulk_add_staff',  [
+            return view('Admin/bulk_add_staff',  [
                 'globalAdmin' =>  $globalAdmin,
                 'students' => $students ,
                 'studentsList' => $studentsList,
@@ -92,7 +92,7 @@ Route::get('admin_page/{id}', function ($id) {
 
         if ($id == 'manage_student') {
 
-            return view('admin/manage_student',  [
+            return view('Admin/manage_student',  [
                 'globalAdmin' =>  $globalAdmin,
                 'students' => $students,
                 'studentsList' => $studentsList,
@@ -105,7 +105,7 @@ Route::get('admin_page/{id}', function ($id) {
 
         if ($id == 'global_value') {
 
-            return view('admin/global_value',  [
+            return view('Admin/global_value',  [
                 'globalAdmin' =>  $globalAdmin,
                 'students' => $students,
                 'studentsList' => $studentsList,
@@ -119,7 +119,7 @@ Route::get('admin_page/{id}', function ($id) {
 
         if ($id == 'bulk_add_student') {
 
-            return view('admin/bulk_add_student',  [
+            return view('Admin/bulk_add_student',  [
                 'globalAdmin' =>  $globalAdmin,
                 'students' => $students,
                 'studentsList' => $studentsList,
@@ -134,5 +134,38 @@ Route::get('admin_page/{id}', function ($id) {
     abort(404);
 })->name('admin_page');
 
+Route::get('student_page/{id}', function ($id) {
+
+    if (auth()->check() && auth()->user()->role == 'Student')
+    {
+
+        $students = StudentMain::all();
+        $studentsList = StudentList::all();
+        $staffMain = StaffMain::all();
+        $staffStudents = StaffStudent::all();
+        $globalAdmin = GlobalAdmin::find(1);
+        $StaffCanSupervise = StaffMain::where('can_supervise', '1')->count();
+        $MainUser = User::all();
+
+
+        $currentStudent = StudentMain::where('email', Auth::user()->email)->first();
+        $currentStudentGroupMember = StudentList::where('email', Auth::user()->email)->get();
+        $currentStudentSupervisor = StaffStudent::where('email', Auth::user()->email)->first();
+        $currentStudentSupervisorUser = User::where('email', $currentStudentSupervisor->email_staff)->first();
+
+        if ($id == 'dashboard') {
+
+            return view('Student/dashboard',  [
+                'currentStudent' =>  $currentStudent,
+                'currentStudentGroupMember' => $currentStudentGroupMember ,
+                'currentStudentSupervisor' => $currentStudentSupervisor,
+                'currentStudentSupervisorUser' => $currentStudentSupervisorUser
+            ]);
+        }
+
+    }
+
+    abort(404);
+})->name('student_page');
 
 
