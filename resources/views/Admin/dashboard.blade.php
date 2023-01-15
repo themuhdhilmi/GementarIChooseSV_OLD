@@ -503,14 +503,13 @@
                                                     <td class="align-middle text-sm">
                                                         <div class="col text-center">
                                                             <p class="text-xs font-weight-bold mb-0">Downloadable:</p>
-                                                            @if ($user->has_abstract_path != '')
+                                                            @if ($user->has_abstract_path != '' || $user->has_poster_proposal_path != '')
                                                                 <button type="button"
-                                                                    onclick="location.href='{{ asset('downloadable/abstracct') }}/{{ $user->email }}.pdf'"
+                                                                    onclick="location.href='{{ asset('downloadable/abstract') }}/{{ $user->email }}.pdf'"
                                                                     class="btn btn-link text-dark text-sm mb-0 px-0 ms-4"><i
                                                                         class="fas fa-file-pdf text-lg me-1"></i>Abstract</button>
-                                                            @elseif($user->has_poster_proposal_path != '')
                                                                 <button type="button"
-                                                                    onclick="location.href='{{ asset('downloadable/poster_proporsal') }}/{{ $user->email }}.pdf'"
+                                                                    onclick="location.href='{{ asset('downloadable/poster_proposal') }}/{{ $user->email }}.pdf'"
                                                                     class="btn btn-link text-dark text-sm mb-0 px-0 ms-4"><i
                                                                         class="fas fa-file-pdf text-lg me-1"></i>Poster/Proposal</button>
                                                             @else

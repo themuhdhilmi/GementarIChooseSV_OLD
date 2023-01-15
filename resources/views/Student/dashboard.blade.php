@@ -3,7 +3,7 @@
 
 
 @section('content')
-<title>JTMK Supervisor | Student Dashboard</title>
+    <title>JTMK Supervisor | Student Dashboard</title>
     <style type="text/css">
         html {
             overflow-y: hidden;
@@ -41,8 +41,7 @@
             <div class="sidenav-header">
                 <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none"
                     aria-hidden="true" id="iconSidenav"></i>
-                <a class="navbar-brand m-0" href=" {{  route('home') }} "
-                    target="_blank">
+                <a class="navbar-brand m-0" href=" {{ route('home') }} " target="_blank">
                     <img src="../assets/img/logo-ct-dark.png" class="navbar-brand-img h-100" alt="main_logo">
                     <span class="ms-1 font-weight-bold">JTMK SUPERVISOR</span>
                 </a>
@@ -63,7 +62,7 @@
                         <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">MANAGE PROFILE</h6>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link " href="{{ route('admin_page', ['id' => 'bulk_add_staff']) }}">
+                        <a class="nav-link " href="{{ route('student_page', ['id' => 'update_profile']) }}">
                             <div
                                 class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                                 <i class="ni ni-single-copy-04 text-warning text-sm opacity-10"></i>
@@ -72,7 +71,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link " href="{{ route('admin_page', ['id' => 'bulk_add_staff']) }}">
+                        <a class="nav-link " href="{{ route('student_page', ['id' => 'change_password']) }}">
                             <div
                                 class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                                 <i class="ni ni-single-copy-04 text-warning text-sm opacity-10"></i>
@@ -84,7 +83,7 @@
                         <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">SUPERVISOR</h6>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link " href="{{ route('admin_page', ['id' => 'manage_student']) }}">
+                        <a class="nav-link " href="{{ route('student_page', ['id' => 'supervisor_list']) }}">
                             <div
                                 class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                                 <i class="ni ni-collection text-info text-sm opacity-10"></i>
@@ -93,7 +92,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link " href="{{ route('admin_page', ['id' => 'bulk_add_student']) }}">
+                        <a class="nav-link " href="{{ route('student_page', ['id' => 'staff_directory']) }}">
                             <div
                                 class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                                 <i class="ni ni-collection text-info text-sm opacity-10"></i>
@@ -304,96 +303,102 @@
                             </div>
                             <div class="card-body pt-0 p-3 text-center">
                                 <h6 class="text-center mb-0">Student Profile</h6>
-                                <span class="text-xs">Plase update your profile. Request your desire supervisor and check if you've been approved.</span>
+                                <span class="text-xs">Plase update your profile. Request your desire supervisor and check
+                                    if you've been approved.</span>
                                 <hr class="horizontal dark my-3">
                                 <div class="table-responsive">
                                     <table class="table align-items-center ">
                                         <tbody>
 
-                                                <tr>
+                                            <tr>
 
-                                                    <td class="align-middle text-sm">
-                                                        <div class="col text-center">
-                                                            <p class="text-xs font-weight-bold mb-0">Session:</p>
-                                                            @if ($currentStudent->session == "")
-                                                                <a style="font-weight: bold; color: red">None</a>
-                                                            @else
-                                                                <a style="font-weight: bold;">{{ $currentStudent->session }}</a>
-                                                            @endif
-
-                                                            <br><br>
-
-                                                            <p class="text-xs font-weight-bold mb-0">Track:</p>
-                                                            @if ($currentStudent->track == "programming")
-                                                            <a style="font-weight: bold;">Software & Application Development</a>
-                                                            @elseif ($currentStudent->track == "security")
-                                                            <a style="font-weight: bold;">Information Security</a>
-                                                            @elseif ($currentStudent->track == "networking")
-                                                            <a style="font-weight: bold;">Networking System</a>
-                                                            @else
-                                                                    <a style="font-weight: bold; color: red">None</a>
-                                                            @endif
-
-                                                            <br><br>
-
-                                                            <p class="text-xs font-weight-bold mb-0">Tittle:</p>
-                                                            @if ($currentStudent->tittle == "")
-                                                                <a style="font-weight: bold; color: red">None</a>
-                                                            @else
-                                                                <a style="font-weight: bold;">{{ $currentStudent->tittle }}</a>
-                                                            @endif
-
-
-                                                            <br><br>
-
-                                                            <p class="text-xs font-weight-bold mb-0">AHLI:</p>
-                                                            @if ($currentStudent->matric_number == "")
-                                                                <a style="font-weight: bold; color: red">None</a>
-                                                            @else
-                                                                <a style="font-weight: bold;">{{ Auth::user()->name }} [{{ $currentStudent->matric_number }}]</a>
-                                                            @endif
-
-                                                            @foreach ($currentStudentGroupMember as $groupMem)
-                                                            <br>
-                                                            <a style="font-weight: bold;">{{  $groupMem->full_name }} [{{ $groupMem->matric_number }}]</a>
-                                                            @endforeach
-
-                                                            <br><br>
-
-                                                            <p class="text-xs font-weight-bold mb-0">SUPERVISOR:</p>
-                                                            @if ($currentStudentSupervisorUser == null)
+                                                <td class="align-middle text-sm">
+                                                    <div class="col text-center">
+                                                        <p class="text-xs font-weight-bold mb-0">SESSION:</p>
+                                                        @if ($currentStudent->session == '')
                                                             <a style="font-weight: bold; color: red">None</a>
-                                                            @else
+                                                        @else
+                                                            <a
+                                                                style="font-weight: bold;">{{ $currentStudent->session }}</a>
+                                                        @endif
 
-                                                            <a style="font-weight: bold;" >{{ $currentStudentSupervisorUser->name }} </a>
+                                                        <br><br>
 
-                                                                @if ($currentStudentSupervisor->is_confirmed == '1')
+                                                        <p class="text-xs font-weight-bold mb-0">TRACK:</p>
+                                                        @if ($currentStudent->track == 'programming')
+                                                            <a style="font-weight: bold;">Software & Application
+                                                                Development</a>
+                                                        @elseif ($currentStudent->track == 'security')
+                                                            <a style="font-weight: bold;">Information Security</a>
+                                                        @elseif ($currentStudent->track == 'networking')
+                                                            <a style="font-weight: bold;">Networking System</a>
+                                                        @else
+                                                            <a style="font-weight: bold; color: red">None</a>
+                                                        @endif
+
+                                                        <br><br>
+
+                                                        <p class="text-xs font-weight-bold mb-0">TITTLE:</p>
+                                                        @if ($currentStudent->tittle == '')
+                                                            <a style="font-weight: bold; color: red">None</a>
+                                                        @else
+                                                            <a
+                                                                style="font-weight: bold;">{{ $currentStudent->tittle }}</a>
+                                                        @endif
+
+
+                                                        <br><br>
+
+                                                        <p class="text-xs font-weight-bold mb-0">AHLI:</p>
+                                                        @if ($currentStudent->matric_number == '')
+                                                            <a style="font-weight: bold; color: red">None</a>
+                                                        @else
+                                                            <a style="font-weight: bold;">{{ Auth::user()->name }}
+                                                                [{{ $currentStudent->matric_number }}]</a>
+                                                        @endif
+
+                                                        @foreach ($currentStudentGroupMember as $groupMem)
+                                                            <br>
+                                                            <a style="font-weight: bold;">{{ $groupMem->full_name }}
+                                                                [{{ $groupMem->matric_number }}]</a>
+                                                        @endforeach
+
+                                                        <br><br>
+
+                                                        <p class="text-xs font-weight-bold mb-0">SUPERVISOR:</p>
+                                                        @if ($currentStudentSupervisorUser == null)
+                                                            <a style="font-weight: bold; color: red">None</a>
+                                                        @else
+                                                            <a style="font-weight: bold;">{{ $currentStudentSupervisorUser->name }}
+                                                            </a>
+
+                                                            @if ($currentStudentSupervisor->is_confirmed == '1')
                                                                 <a style="font-weight: bold; color: green">[APPROVED]</a>
-                                                                @else
-                                                                <a style="font-weight: bold; color: red">[PEDNING APPROVAL]</a>
-                                                                @endif
-
-                                                            @endif
-
-                                                            <br><br>
-
-                                                            <p class="text-xs font-weight-bold mb-0">DOWNLOADABLE:</p>
-                                                            @if ($currentStudent->has_abstract_path != '')
-                                                                <button type="button"
-                                                                    onclick="location.href='{{ asset('downloadable/abstracct') }}/{{ $currentStudent->email }}.pdf'"
-                                                                    class="btn btn-link text-dark text-sm mb-0 px-0 ms-4"><i
-                                                                        class="fas fa-file-pdf text-lg me-1"></i>Abstract</button>
-                                                            @elseif($currentStudent->has_poster_proposal_path != '')
-                                                                <button type="button"
-                                                                    onclick="location.href='{{ asset('downloadable/poster_proporsal') }}/{{ $currentStudent->email }}.pdf'"
-                                                                    class="btn btn-link text-dark text-sm mb-0 px-0 ms-4"><i
-                                                                        class="fas fa-file-pdf text-lg me-1"></i>Poster/Proposal</button>
                                                             @else
-                                                                <a style="font-weight: bold; color: red">None</a>
+                                                                <a style="font-weight: bold; color: red">[PEDNING
+                                                                    APPROVAL]</a>
                                                             @endif
-                                                        </div>
-                                                    </td>
-                                                </tr>
+                                                        @endif
+
+                                                        <br><br>
+
+                                                        <p class="text-xs font-weight-bold mb-0">DOWNLOADABLE:</p>
+                                                        @if ($currentStudent->has_abstract_path == '1' && $currentStudent->has_poster_proposal_path == '1')
+                                                            <button type="button"
+                                                                onclick="location.href='{{ asset('downloadable/abstract') }}/{{ $currentStudent->email }}.pdf'"
+                                                                class="btn btn-link text-dark text-sm mb-0 px-0 ms-4"><i
+                                                                    class="fas fa-file-pdf text-lg me-1"></i>Abstract</button>
+
+                                                            <button type="button"
+                                                                onclick="location.href='{{ asset('downloadable/poster_proposal') }}/{{ $currentStudent->email }}.pdf'"
+                                                                class="btn btn-link text-dark text-sm mb-0 px-0 ms-4"><i
+                                                                    class="fas fa-file-pdf text-lg me-1"></i>Poster/Proposal</button>
+                                                        @else
+                                                            <a style="font-weight: bold; color: red">None</a>
+                                                        @endif
+                                                    </div>
+                                                </td>
+                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -410,7 +415,12 @@
                             </div>
                             <div class="card-body pt-0 p-3 text-center">
                                 <h6 class="text-center mb-0">Information</h6>
-                                <span class="text-xs">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</span>
+                                <span class="text-xs">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                                    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis
+                                    aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+                                    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
+                                    deserunt mollit anim id est laborum.</span>
                                 <hr class="horizontal dark my-3">
                                 <h5 class="mb-0"></h5>
                             </div>
@@ -446,12 +456,11 @@
                         <p>This project is created for Jabatan Teknologi Maklumat & Komunikasi Politeknik Ungku Omar.</p>
                         <div class="w-100 text-center">
                             <h6 class="mt-3">Check us out!</h6>
-                            <a href="https://gementar.com"
-                                class="btn btn-dark mb-0 me-2" target="_blank">
+                            <a href="https://gementar.com" class="btn btn-dark mb-0 me-2" target="_blank">
                                 <i class="fab fa-earth-asia me-1" aria-hidden="true"></i> Website
                             </a>
-                            <a href="https://github.com/themuhdhilmi/daftartprojekjtmk"
-                                class="btn btn-dark mb-0 me-2" target="_blank">
+                            <a href="https://github.com/themuhdhilmi/daftartprojekjtmk" class="btn btn-dark mb-0 me-2"
+                                target="_blank">
                                 <i class="fab fa-github-square me-1" aria-hidden="true"></i> Github
                             </a>
                         </div>

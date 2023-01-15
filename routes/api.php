@@ -8,12 +8,18 @@ use App\Http\Controllers\UserController;
 //     return $request->user();
 // });
 
+//-----------------------------------------------------------------------------------------------------------------------------------
+                                                //      ADMIN PAGE & GLOBAL
+//-----------------------------------------------------------------------------------------------------------------------------------
+
 // Global Value
 Route::post('upd_global_val', [App\Http\Controllers\GlobalAdminController::class, 'update'])->name('upd_global_val');
 // Delete all user
 Route::delete('user_delete_all', [App\Http\Controllers\UserController::class, 'userDelete'])->name('user_delete_all');
 // Update user password base on email
 Route::post('user_update_password', [App\Http\Controllers\UserController::class, 'userUpdatePassword'])->name('user_update_password');
+// Changr Password
+Route::post('changeUserPassword', [App\Http\Controllers\UserController::class, 'changeUserPassword'])->name('changeUserPassword');
 //-----------------------------------------------------------------------------------------------------------------------------------
 // Create new admin
 Route::post('radmin', [App\Http\Controllers\UserController::class, 'createAdmin'])->name('radmin');
@@ -31,3 +37,10 @@ Route::post('rstud', [App\Http\Controllers\StudentController::class, 'createStud
 Route::post('updateStudent', [App\Http\Controllers\StudentController::class, 'updateStudent'])->name('updateStudent');
 // Bulk Create Student
 Route::post('bulkCreateStudent', [App\Http\Controllers\StudentController::class, 'bulkCreateStudent'])->name('bulkCreateStudent');
+
+
+//-----------------------------------------------------------------------------------------------------------------------------------
+                                                //      STUDENTS PAGE
+//-----------------------------------------------------------------------------------------------------------------------------------
+Route::post('updateStudentProfile', [App\Http\Controllers\StudentController::class, 'updateStudentProfile'])->name('updateStudentProfile');
+Route::post('changeStudentPassword', [App\Http\Controllers\StudentController::class, 'changeStudentPassword'])->name('changeStudentPassword');

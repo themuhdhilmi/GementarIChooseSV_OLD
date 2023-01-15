@@ -3,11 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\GlobalAdmin;
+use App\Models\StaffMain;
 use App\Models\StaffStudent;
+use App\Models\StudentList;
 use App\Models\StudentMain;
+use Auth;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use PhpParser\Node\Stmt\Use_;
+use Validator;
 
 class StudentController extends Controller
 {
@@ -202,6 +207,7 @@ class StudentController extends Controller
         $index = 1;
         // Iterate over the lines and create new users for each one
         foreach ($csv_lines as $line) {
+            $index++;
             // Split the line into an array of values
             $values = explode(",", $line);
 
@@ -273,9 +279,210 @@ class StudentController extends Controller
 
             $the_res = [$index => ['Successfully inserted']];
             array_push($sucess, $the_res);
-            $index++;
+
         }
 
         return response()->json(['succes' => $sucess, 'error' => $error], 201);
     }
+
+    /*
+    *
+    * This used for student_page/update_profile
+    *
+    */
+    public function updateStudentProfile(Request $request)
+    {
+        $currentStudentMain = StudentMain::where('email', $request->input('txtEmail'))->first();
+
+        // Validate extra if user doesnt upload anything yet
+        if($currentStudentMain->has_abstract_path == '1' && $currentStudentMain->has_poster_proposal_path == '1' )
+        {
+            $validator = Validator::make($request->all(), [
+                'txtNameMember2' => 'required|string|min:5',
+                'txtMatricMember2' => 'required|string|min:5',
+                'txtNameMember3' => 'required|string|min:5',
+                'txtMatricMember3' => 'required|string|min:5',
+                'txtProjectTittle' => 'required|string|min:5',
+            ]);
+
+
+            $stringErrorCollection = '';
+
+            $errors = $validator->errors();
+            foreach ($errors->all() as $error) {
+                $stringErrorCollection = $stringErrorCollection . $error;
+            }
+
+            if($validator->fails()) {
+                return redirect()->route('student_page', ['id' => 'update_profile', 'errors' => $stringErrorCollection]);
+            }
+        }
+        else
+        {
+            $validator = Validator::make($request->all(), [
+                'txtNameMember2' => 'required|string|min:5',
+                'txtMatricMember2' => 'required|string|min:5',
+                'txtNameMember3' => 'required|string|min:5',
+                'txtMatricMember3' => 'required|string|min:5',
+                'txtProjectTittle' => 'required|string|min:5',
+                'fileAbstract' => 'required|mimes:pdf|max:5000',
+                'filePoster' => 'required|mimes:pdf|max:5000',
+            ]);
+
+            $stringErrorCollection = '';
+
+            $errors = $validator->errors();
+            foreach ($errors->all() as $error) {
+                $stringErrorCollection = $stringErrorCollection . $error;
+            }
+
+            if($validator->fails()) {
+                return redirect()->route('student_page', ['id' => 'update_profile', 'errors' => $stringErrorCollection]);
+            }
+
+
+        }
+
+
+        /*
+        *
+        *   VALIDATION AND SV SELECTION PROCESS
+        *
+        */
+        if($request->input('selectSv') == "0")
+        {
+            // If sv none, set semail staff and confirmed set to zero and none
+            StaffStudent::where('email', $request->input('txtEmail'))->update(['email_staff' => '', 'is_confirmed' => '0']);
+        }
+        else if($request->input('selectSv') == 'approved')
+        {
+
+        }
+        else
+        {
+            // Check if email existed
+            $isSupervisoExisted = StaffMain::where('email', $request->input('selectSv'))->where('can_supervise', '1')->count();
+
+            // If sv existed
+            if(strval($isSupervisoExisted) >= 1)
+            {
+                $quota = StaffStudent::where('email_staff', $request->input('selectSv'))->where('is_confirmed', '1')->count();
+                $global = GlobalAdmin::find(1);
+
+                // if SV quota not available
+                if(strval($quota) >= $global->quota)
+                {
+                    return redirect()->route('student_page', ['id' => 'update_profile', 'errors' => 'SV Quota reached limit.']);
+                }
+
+                StaffStudent::where('email', $request->input('txtEmail'))->update(['email_staff' => $request->input('selectSv'), 'is_confirmed' => '0']);
+            }
+            else
+            {
+                return redirect()->route('student_page', ['id' => 'update_profile', 'errors' => 'Error SV Input.']);
+            }
+        }
+
+        /*
+        *
+        *   Change Project Tittle
+        *
+        */
+        StudentMain::where('email', $request->input('txtEmail'))->update(['tittle' => $request->input('txtProjectTittle')]);
+
+        // Delete All Student in student list
+        StudentList::where('email',  $request->input('txtEmail'))->delete();
+
+        if($request->input('txtMatricMember2') != null )
+        {
+            $studentList1 = new StudentList();
+            $studentList1->full_name = $request->input('txtNameMember2');
+            $studentList1->email = $request->input('txtEmail');
+            $studentList1->matric_number = $request->input('txtMatricMember2');
+            $studentList1->save();
+        }
+
+
+        if($request->input('txtMatricMember3') != null )
+        {
+            $studentList2 = new StudentList();
+            $studentList2->full_name = $request->input('txtNameMember3');
+            $studentList2->email = $request->input('txtEmail');
+            $studentList2->matric_number = $request->input('txtMatricMember3');
+            $studentList2->save();
+        }
+
+
+        if($request->input('txtMatricMember4') != null )
+        {
+            $studentList3 = new StudentList();
+            $studentList3->full_name = $request->input('txtNameMember4');
+            $studentList3->email = $request->input('txtEmail');
+            $studentList3->matric_number = $request->input('txtMatricMember4');
+            $studentList3->save();
+        }
+
+
+        if($request->input('txtMatricMember5') != null )
+        {
+            $studentList4 = new StudentList();
+            $studentList4->full_name = $request->input('txtNameMember5');
+            $studentList4->email = $request->input('txtEmail');
+            $studentList4->matric_number = $request->input('txtMatricMember5');
+            $studentList4->save();
+        }
+
+        if($request->file('fileAbstract')){
+            $request->file('fileAbstract')->move(public_path().'/downloadable//abstract', $request->input('txtEmail') . '.pdf');
+            StudentMain::where('email', $request->input('txtEmail'))->update(['has_abstract_path' => '1']);
+        }
+
+        if($request->file('filePoster')){
+            $request->file('filePoster')->move(public_path().'/downloadable//poster_proposal', $request->input('txtEmail') . '.pdf');
+            StudentMain::where('email', $request->input('txtEmail'))->update(['has_poster_proposal_path' => '1']);
+        }
+
+        return redirect()->route('student_page', ['id' => 'update_profile', 'success' => 'Success updating profile.']);
+    }
+
+    public function changeStudentPassword(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'txtCurrentPassword' => 'required|string',
+            'txtNewPassword' => 'required|string|min:8|confirmed',
+            'txtEmail' => 'required|email',
+        ]);
+
+        if ($validator->fails()) {
+            //return response()->json(['errors' => $validator->errors()], 400);
+
+            $stringErrorCollection = '';
+
+            $errors = $validator->errors();
+            foreach ($errors->all() as $error) {
+                $stringErrorCollection = $stringErrorCollection . $error;
+            }
+
+
+            return redirect()->route('student_page', ['id' => 'change_password', 'errors' => $stringErrorCollection]);
+        }
+
+
+        $user = User::where('email', $request->input('txtEmail'))->first();
+
+
+        if (!Hash::check($request->txtCurrentPassword, $user->password)) {
+            //return response()->json(['errors' => 'The provided old password is incorrect.'], 400);
+
+            return redirect()->route('student_page', ['id' => 'change_password', 'erros' => 'Old password not match.']);
+        }
+
+        // Update the user's password
+        $user->password = Hash::make($request->txtNewPassword);
+        $user->save();
+
+        return response()->json(['success' => 'Password successfully changed.'], 200);
+
+    }
+
 }

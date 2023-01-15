@@ -10,6 +10,7 @@ use App\Models\StaffStudent;
 use App\Models\StudentList;
 use App\Models\StudentMain;
 use App\Models\User;
+use Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -45,10 +46,10 @@ class UserController extends Controller
         ]);
 
         /*
-        *
-        * Delete the users
-        *
-        */
+         *
+         * Delete the users
+         *
+         */
         $user = User::where('email', $request->input('email'))->first();
         // If the user does not exist, return a 404 error
         if (!$user) {
@@ -58,24 +59,24 @@ class UserController extends Controller
         $user->delete();
 
         /*
-        *
-        * Delete the users in Staffs
-        *
-        */
+         *
+         * Delete the users in Staffs
+         *
+         */
         StaffMain::where('email', $request->input('email'))->delete();
         StaffInfo::where('email', $request->input('email'))->delete();
         StaffStudent::where('email', $request->input('email'))->delete();
         //Should set email_staff to empty instead of deleted it.
-        StaffStudent::where('email_staff',  $request->input('email'))->update([
+        StaffStudent::where('email_staff', $request->input('email'))->update([
             'email_staff' => '',
             'is_confirmed' => 0
         ]);
 
         /*
-        *
-        * Delete the users in Students
-        *
-        */
+         *
+         * Delete the users in Students
+         *
+         */
         StudentMain::where('email', $request->input('email'))->delete();
         StudentList::where('email', $request->input('email'))->delete();
 
@@ -101,4 +102,31 @@ class UserController extends Controller
 
         return response()->json($user, 200);
     }
+
+    public function changeUserPassword(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'old_password' => 'required|string',
+            'new_password' => 'required|string|min:8|confirmed',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 400);
+        }
+
+        // Retrieve the user's current password
+        $user = User::find(auth()->user()->id);
+
+        // Check if the provided old password matches the current password
+        if (!Hash::check($request->old_password, $user->password)) {
+            return response()->json(['errors' => 'The provided old password is incorrect.'], 400);
+        }
+
+        // Update the user's password
+        $user->password = Hash::make($request->new_password);
+        $user->save();
+
+        return response()->json(['success' => 'Password successfully changed.'], 200);
+    }
+
 }

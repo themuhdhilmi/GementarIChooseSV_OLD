@@ -152,10 +152,57 @@ Route::get('student_page/{id}', function ($id) {
         $currentStudentGroupMember = StudentList::where('email', Auth::user()->email)->get();
         $currentStudentSupervisor = StaffStudent::where('email', Auth::user()->email)->first();
         $currentStudentSupervisorUser = User::where('email', $currentStudentSupervisor->email_staff)->first();
-
         if ($id == 'dashboard') {
 
             return view('Student/dashboard',  [
+                'currentStudent' =>  $currentStudent,
+                'currentStudentGroupMember' => $currentStudentGroupMember ,
+                'currentStudentSupervisor' => $currentStudentSupervisor,
+                'currentStudentSupervisorUser' => $currentStudentSupervisorUser
+            ]);
+        }
+
+        if ($id == 'update_profile') {
+
+            $supervisorThatCanSupervise = StaffMain::where('can_supervise', '1')->get();
+            $supervisors[] = array();
+
+            foreach ($supervisorThatCanSupervise as $supervisor)
+            {
+                $selected = User::where('email', $supervisor->email)->first();
+                $quota = StaffStudent::where('email_staff', $supervisor->email)->where('is_confirmed', '1')->count();
+
+                $supervisors[] =
+                    [
+                        'name' => $selected->name,
+                        'email' => $supervisor->email,
+                        'quota' =>  $quota
+                    ];
+            }
+
+            return view('Student/update_profile',  [
+                'currentStudent' =>  $currentStudent,
+                'currentStudentGroupMember' => $currentStudentGroupMember ,
+                'currentStudentSupervisor' => $currentStudentSupervisor,
+                'currentStudentSupervisorUser' => $currentStudentSupervisorUser,
+                'supervisors' => $supervisors,
+                'globalAdmin' => $globalAdmin
+            ]);
+        }
+
+        if ($id == 'change_password') {
+
+            return view('Student/change_password',  [
+                'currentStudent' =>  $currentStudent,
+                'currentStudentGroupMember' => $currentStudentGroupMember ,
+                'currentStudentSupervisor' => $currentStudentSupervisor,
+                'currentStudentSupervisorUser' => $currentStudentSupervisorUser
+            ]);
+        }
+
+        if ($id == 'supervisor_list') {
+
+            return view('Student/supervisor_list',  [
                 'currentStudent' =>  $currentStudent,
                 'currentStudentGroupMember' => $currentStudentGroupMember ,
                 'currentStudentSupervisor' => $currentStudentSupervisor,

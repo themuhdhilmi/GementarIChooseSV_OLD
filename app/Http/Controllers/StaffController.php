@@ -124,9 +124,10 @@ class StaffController extends Controller
 
         $sucess = [];
         $error = [];
-        $index = 1;
+        $index = 0;
         // Iterate over the lines and create new users for each one
         foreach ($csv_lines as $line) {
+            $index++;
             // Split the line into an array of values
             $values = explode(",", $line);
 
@@ -165,6 +166,7 @@ class StaffController extends Controller
                 //return response()->json(['message' => 'error : invalid track']);
             }
 
+
             if (!empty($error_res)) {
                 $the_res = [$index => $error_res];
                 array_push($error, $the_res);
@@ -187,7 +189,7 @@ class StaffController extends Controller
 
             $the_res = [$index => ['Successfully inserted']];
             array_push($sucess, $the_res);
-            $index++;
+
         }
 
         return response()->json(['succes' => $sucess, 'error' => $error], 201);
