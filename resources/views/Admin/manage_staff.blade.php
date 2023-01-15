@@ -3,7 +3,7 @@
 
 
 @section('content')
-<title>JTMK Supervisor | Manage Staff</title>
+    <title>JTMK Supervisor | Manage Staff</title>
     <style type="text/css">
         html {
             overflow-y: hidden;
@@ -41,8 +41,7 @@
             <div class="sidenav-header">
                 <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none"
                     aria-hidden="true" id="iconSidenav"></i>
-                    <a class="navbar-brand m-0" href=" {{  route('home') }} "
-                    target="_blank">
+                <a class="navbar-brand m-0" href=" {{ route('home') }} " target="_blank">
                     <img src="../assets/img/logo-ct-dark.png" class="navbar-brand-img h-100" alt="main_logo">
                     <span class="ms-1 font-weight-bold">JTMK SUPERVISOR</span>
                 </a>
@@ -392,12 +391,12 @@
                                 <div class="p-3 text-left">
                                     <div>
                                         <button id="this_is_save" type="submit" class="btn btn-success btn-sm" ">Save</button>
-                                             @if (isset($_GET['message']))
-                                                @if ($_GET['message'] == 'success')
-                                                    <div class="alert alert-success" role="alert">
-                                                        Successfully Updated
-                                                    </div>
-                                                @endif
+                                                  @if (isset($_GET['message']))
+                                            @if ($_GET['message'] == 'success')
+                                                <div class="alert alert-success" role="alert">
+                                                    Successfully Updated
+                                                </div>
+                                            @endif
                                             @endif
                                     </div>
                                 </div>
@@ -438,10 +437,16 @@
                                                             <tr id='admin_row_{{ $staffUser_Group->email }}'>
                                                                 <td>
                                                                     <div class="d-flex px-2 py-1">
-                                                                        <div><img
-                                                                                src="{{ asset('downloadable/staff_img/' . $staffUser_Group->email . '.jpg') }}"
-                                                                                class="avatar avatar-sm me-3"
-                                                                                alt="user6">
+                                                                        <div>
+                                                                            @if (file_exists(public_path('downloadable/staff_img/' . $staffUser_Group->email . '.jpg')))
+                                                                                <img src="{{ asset('downloadable/staff_img/' . $staffUser_Group->email . '.jpg') }}"
+                                                                                    class="avatar avatar-sm me-3"
+                                                                                    alt="">
+                                                                            @else
+                                                                                <img src="{{ asset('downloadable/staff_img/empty_profile.jpg') }}"
+                                                                                    class="avatar avatar-sm me-3"
+                                                                                    alt="">
+                                                                            @endif
                                                                         </div>
                                                                         <div
                                                                             class="d-flex flex-column justify-content-center">
@@ -660,12 +665,11 @@
                     <p>This project is created for Jabatan Teknologi Maklumat & Komunikasi Politeknik Ungku Omar.</p>
                     <div class="w-100 text-center">
                         <h6 class="mt-3">Check us out!</h6>
-                        <a href="https://gementar.com"
-                            class="btn btn-dark mb-0 me-2" target="_blank">
+                        <a href="https://gementar.com" class="btn btn-dark mb-0 me-2" target="_blank">
                             <i class="fab fa-earth-asia me-1" aria-hidden="true"></i> Website
                         </a>
-                        <a href="https://github.com/themuhdhilmi/daftartprojekjtmk"
-                            class="btn btn-dark mb-0 me-2" target="_blank">
+                        <a href="https://github.com/themuhdhilmi/daftartprojekjtmk" class="btn btn-dark mb-0 me-2"
+                            target="_blank">
                             <i class="fab fa-github-square me-1" aria-hidden="true"></i> Github
                         </a>
                     </div>

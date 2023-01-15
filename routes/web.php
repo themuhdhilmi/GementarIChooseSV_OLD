@@ -202,11 +202,31 @@ Route::get('student_page/{id}', function ($id) {
 
         if ($id == 'supervisor_list') {
 
+            $supervisorThatCanSupervise = StaffMain::where('can_supervise', '1')->get();
+            $supervisors[] = array();
+
+            foreach ($supervisorThatCanSupervise as $supervisor)
+            {
+                $selected = User::where('email', $supervisor->email)->first();
+                $quota = StaffStudent::where('email_staff', $supervisor->email)->where('is_confirmed', '1')->count();
+                $staffMain = StaffMain::where('email', $supervisor->email)->first();
+
+                $supervisors[] =
+                    [
+                        'name' => $selected->name,
+                        'email' => $supervisor->email,
+                        'quota' =>  $quota,
+                        'track' => $staffMain->track,
+                    ];
+            }
+
             return view('Student/supervisor_list',  [
                 'currentStudent' =>  $currentStudent,
                 'currentStudentGroupMember' => $currentStudentGroupMember ,
                 'currentStudentSupervisor' => $currentStudentSupervisor,
-                'currentStudentSupervisorUser' => $currentStudentSupervisorUser
+                'currentStudentSupervisorUser' => $currentStudentSupervisorUser,
+                'supervisors' => $supervisors,
+                'globalAdmin' => $globalAdmin
             ]);
         }
 
