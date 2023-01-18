@@ -27,7 +27,7 @@ class HomeController extends Controller
         {
             return redirect()->route('admin_page', ['id' => 'dashboard']);
         }
-        else if (auth()->check() && auth()->user()->role == 'Lecturer')
+        else if (auth()->check() && auth()->user()->role == 'Staff')
         {
             return redirect()->route('staff_page', ['id' => 'dashboard']);
         }

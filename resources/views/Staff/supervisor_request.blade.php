@@ -3,7 +3,7 @@
 
 
 @section('content')
-    <title>JTMK Supervisor | Supervisor List</title>
+    <title>JTMK Supervisor | Manage Staff</title>
     <style type="text/css">
         html {
             overflow-y: hidden;
@@ -50,7 +50,7 @@
             <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link " href="{{ route('student_page', ['id' => 'dashboard']) }}">
+                        <a class="nav-link " href="{{ route('staff_page', ['id' => 'dashboard']) }}">
                             <div
                                 class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                                 <i class="ni ni-tv-2 text-primary text-sm opacity-10"></i>
@@ -59,10 +59,10 @@
                         </a>
                     </li>
                     <li class="nav-item mt-3">
-                        <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">MANAGE PROFILE</h6>
+                        <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">PROFILE</h6>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link " href="{{ route('student_page', ['id' => 'update_profile']) }}">
+                        <a class="nav-link " href="{{ route('staff_page', ['id' => 'update_profile']) }}">
                             <div
                                 class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                                 <i class="ni ni-single-copy-04 text-warning text-sm opacity-10"></i>
@@ -71,7 +71,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link  " href="{{ route('student_page', ['id' => 'change_password']) }}">
+                        <a class="nav-link " href="{{ route('staff_page', ['id' => 'change_password']) }}">
                             <div
                                 class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                                 <i class="ni ni-single-copy-04 text-warning text-sm opacity-10"></i>
@@ -80,24 +80,24 @@
                         </a>
                     </li>
                     <li class="nav-item mt-3">
-                        <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">SUPERVISOR</h6>
+                        <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Supervisee</h6>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="{{ route('student_page', ['id' => 'supervisor_list']) }}">
+                        <a class="nav-link " href="{{ route('staff_page', ['id' => 'manage_supervisee']) }}">
                             <div
                                 class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                                 <i class="ni ni-collection text-info text-sm opacity-10"></i>
                             </div>
-                            <span class="nav-link-text ms-1">Supervisor List</span>
+                            <span class="nav-link-text ms-1">Manage Supervisee</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link " href="{{ route('student_page', ['id' => 'staff_directory']) }}">
+                        <a class="nav-link active" href="{{ route('staff_page', ['id' => 'supervisor_request']) }}">
                             <div
                                 class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                                 <i class="ni ni-collection text-info text-sm opacity-10"></i>
                             </div>
-                            <span class="nav-link-text ms-1">Staff Directory</span>
+                            <span class="nav-link-text ms-1">Supervisor Request</span>
                         </a>
                 </ul>
             </div>
@@ -253,8 +253,13 @@
                     <div class="row gx-4">
                         <div class="col-auto">
                             <div class="avatar avatar-xl position-relative">
-                                <img src="https://cdn-icons-png.flaticon.com/512/3135/3135755.png" alt="profile_image"
-                                    class="w-100 border-radius-lg shadow-sm">
+                                @if (file_exists(public_path('downloadable/staff_img/' . Auth::user()->email . '.jpg')))
+                                    <img src="{{ asset('downloadable/staff_img/' . Auth::user()->email . '.jpg') }}"
+                                        class="w-90 h-100 border-radius-lg shadow-sm">
+                                @else
+                                    <img src="{{ asset('downloadable/staff_img/empty_profile.jpg') }}"
+                                        class="w-90 h-100  border-radius-lg shadow-sm">
+                                @endif
                             </div>
                         </div>
                         <div class="col-auto my-auto">
@@ -292,94 +297,159 @@
             <!-- ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
             <div class="container-fluid py-4">
                 <div class="row">
-                    <div class="col-md-13 py-2">
+
+                    <div class="col-md-12 py-2">
                         <div class="card">
+
                             <div class="card-header mx-4 p-3 text-center">
+                                @if (isset($_GET['errors']))
+                                        <div class="alert alert-danger" role="alert">
+                                            <a style="color: white"> {{ $_GET['errors'] }} </a>
+                                        </div>
+                                    @endif
+                                    @if (isset($_GET['success']))
+                                        <div class="alert alert-success" role="alert">
+                                            <a style="color: white"> {{ $_GET['success'] }} </a>
+                                        </div>
+                                    @endif
                                 <div
                                     class="icon icon-shape icon-lg bg-gradient-primary shadow text-center border-radius-lg">
                                     <i class="fas fa-duotone fa-quote-left"></i>
                                 </div>
-                                <div>
-                                    <br>
-                                    <a>Supervisor List</a>
-                                    <hr class="horizontal dark my-3">
-                                </div>
-                                <div class="table-responsive p-0">
-                                    <table class="table align-items-center mb-0">
-                                        <thead>
-                                            <tr>
-                                                <th>
-
-                                                </th>
-                                                <th
-                                                    class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                    Track</th>
-                                                <th
-                                                    class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                    Status</th>
-                                                <th
-                                                    class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                    profile</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach ($supervisors as $staff)
-                                                @if (is_array($staff) && array_key_exists('name', $staff))
-                                                    <tr>
-                                                        <td>
-                                                            <div class="d-flex px-2 py-1">
-                                                                <div>
-                                                                    @if (file_exists(public_path('downloadable/staff_img/' . $staff['email'] . '.jpg')))
-                                                                        <img src="{{ asset('downloadable/staff_img/' . $staff['email'] . '.jpg') }}"
-                                                                            class="avatar avatar-sm me-3" alt="">
-                                                                    @else
-                                                                        <img src="{{ asset('downloadable/staff_img/empty_profile.jpg') }}"
-                                                                            class="avatar avatar-sm me-3" alt="">
-                                                                    @endif
-                                                                </div>
-                                                                <div class="d-flex flex-column justify-content-center">
-                                                                    <h6 class="mb-0 text-sm">{{ $staff['name'] }}</h6>
-                                                                    <p class="text-xs text-secondary mb-0">
-                                                                        {{ $staff['email'] }}</p>
-                                                                </div>
-
-                                                            </div>
-                                </div>
-                                </td>
-                                <td>
-                                    <p class="text-xs text-secondary mb-0">{{ $staff['track'] }}</p>
-                                </td>
-                                <td class="align-middle text-center text-sm">
-                                    @if (intval($staff['quota']) >= intval($globalAdmin->quota))
-                                        <span class="badge badge-sm bg-gradient-danger">FULL</span>
-                                    @else
-                                        <span class="badge badge-sm bg-gradient-success">AVAILABLE</span>
-                                    @endif
-                                </td>
-                                <td class="align-middle text-center text-sm">
-                                    <button type="button" {{-- onclick="location.href='{{ asset('downloadable/abstract') }}/{{ $currentStudent->email }}.pdf'" --}}
-                                        onclick="location.href='{{ asset('downloadable/staff_img/empty_profile.jpg') }}'"
-                                        class="btn btn-link text-dark text-sm mb-0 px-0 ms-4"><i
-                                            class="fas fa-user text-lg me-1"></i></button>
-                                </td>
-                                </tr>
-                                @endif
-                                @endforeach
-                                </tbody>
-                                </table>
                             </div>
+                            <div class="card-body pt-0 p-3 text-center">
+                                <h6 class="text-center mb-0">Supervisor List</h6>
+                                <span class="text-xs">List of students requesting you to become their supervisor.</span>
+                                <br>
+                                <span class="text-xs">Your supervisee/quota. {{ $countCurrentStaffSupervisee }}/{{ $globalAdmin->quota }}</span>
+                                <hr class="horizontal dark my-3">
+                                <div class="table-responsive">
+                                    <table class="table align-items-center ">
+                                        <tbody>
 
+                                            @foreach ($students as $user)
+                                                <tr>
+                                                    <td class="w-10">
+                                                        <div class="d-flex px-2 py-1 align-items-center">
+                                                            <div>
+                                                                <a>{{ $loop->index + 1 }}</a>
+                                                            </div>
+                                                            <div class="ms-4">
+                                                                <p class="text-xs font-weight-bold mb-0">Project Tittle:
+                                                                </p>
+                                                                <h6 class="text-sm mb-0">
+                                                                    @if ($user->tittle == '')
+                                                                        <a style="color: red">None</a>
+                                                                    @else
+                                                                        {{ $user->tittle }}
+                                                                    @endif
+                                                                </h6>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+
+                                                    <td>
+                                                        <div class="text-center">
+                                                            <p class="text-xs font-weight-bold mb-0">Name:</p>
+                                                            <h6 class="text-sm mb-0">
+                                                                @if ($user->email == '')
+                                                                    <a style="color: red">None</a>
+                                                                @else
+                                                                    @foreach ($MainUser as $allUser)
+                                                                        @if ($user->email == $allUser->email)
+                                                                            {{ $allUser->name }}
+                                                                        @endif
+                                                                    @endforeach {{ ' ' }}
+
+                                                                    {{ $user->matric_number }}
+                                                                @endif
+                                                            </h6>
+                                                            @foreach ($studentsList as $studentsListUser)
+                                                                @if ($user->email == $studentsListUser->email)
+                                                                    <h6 class="text-sm mb-0">
+                                                                        @if ($studentsListUser->full_name == '')
+                                                                            <a style="color: red">None</a>
+                                                                        @else
+                                                                            {{ $studentsListUser->full_name }}
+                                                                            {{ ' ' }}
+                                                                            {{ $studentsListUser->matric_number }}
+                                                                        @endif
+                                                                    </h6>
+                                                                @endif
+                                                            @endforeach
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="text-center">
+                                                            <p class="text-xs font-weight-bold mb-0">Track:</p>
+                                                            <h6 class="text-sm mb-0">
+                                                                @if ($user->track == '')
+                                                                    <a style="color: red">None</a>
+                                                                @else
+                                                                    {{ $user->track }}
+                                                                @endif
+                                                            </h6>
+                                                        </div>
+                                                    </td>
+
+                                                    <td class="align-middle text-sm">
+                                                        <div class="col text-center">
+                                                            <p class="text-xs font-weight-bold mb-0">Downloadable:</p>
+                                                            @if ($user->has_abstract_path != '' || $user->has_poster_proposal_path != '')
+                                                                <button type="button"
+                                                                    onclick="location.href='{{ asset('downloadable/abstract') }}/{{ $user->email }}.pdf'"
+                                                                    class="btn btn-link text-dark text-sm mb-0 px-0 ms-4"><i
+                                                                        class="fas fa-file-pdf text-lg me-1"></i>Abstract</button>
+                                                                <button type="button"
+                                                                    onclick="location.href='{{ asset('downloadable/poster_proposal') }}/{{ $user->email }}.pdf'"
+                                                                    class="btn btn-link text-dark text-sm mb-0 px-0 ms-4"><i
+                                                                        class="fas fa-file-pdf text-lg me-1"></i>Poster/Proposal</button>
+                                                            @else
+                                                                <a style="color: red">None</a>
+                                                            @endif
+                                                        </div>
+                                                    </td>
+                                                    <td class="align-middle text-sm">
+                                                        <div class="col text-center">
+                                                            {{-- <p class="text-xs font-weight-bold mb-0">Accept/Decline:</p> --}}
+                                                            <form action="{{ route('supervisorRequest') }}" method="POST">
+                                                            @csrf
+                                                            <button type="submit"
+                                                                class="btn btn-link text-dark text-sm mb-0 px-0 ms-4"><i
+                                                                    class="fas fa-check text-lg me-1"></i></button>
+                                                                    <input class="form-control" type="text" name="txtEmail" value="{{ Auth::user()->email }}" hidden>
+                                                                    <input class="form-control" type="text" name="txtStudentEmail" value="{{ $user->email }}" hidden>
+                                                                    <input class="form-control" type="text" name="buttonSelected" value="approve" hidden>
+                                                            </form>
+                                                            <form action="{{ route('supervisorRequest') }}" method="POST">
+                                                                @csrf
+                                                            <button type="submit"
+                                                                class="btn btn-link text-dark text-sm mb-0 px-0 ms-4"><i
+                                                                    class="fas fa-ban text-lg me-1"></i></button>
+                                                                    <input class="form-control" type="text" name="txtEmail" value="{{ Auth::user()->email }}" hidden>
+                                                                    <input class="form-control" type="text" name="txtStudentEmail" value="{{ $user->email }}" hidden>
+                                                                    <input class="form-control" type="text" name="buttonSelected" value="decline" hidden>
+                                                                </form>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-
-                <footer class="footer pt-3  ">
-                    <div class="container-fluid">
-                        <br><br><br><br><br>
-
-                    </div>
-                </footer>
             </div>
+
+            <footer class="footer pt-3  ">
+                <div class="container-fluid">
+                    <br><br><br><br><br>
+
+                </div>
+            </footer>
+        </div>
         </div>
         <div class="fixed-plugin">
             <a class="fixed-plugin-button text-dark position-fixed px-3 py-2">

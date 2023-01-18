@@ -3,7 +3,7 @@
 
 
 @section('content')
-    <title>JTMK Supervisor | Supervisor List</title>
+    <title>JTMK Supervisor | Change Password</title>
     <style type="text/css">
         html {
             overflow-y: hidden;
@@ -41,7 +41,8 @@
             <div class="sidenav-header">
                 <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none"
                     aria-hidden="true" id="iconSidenav"></i>
-                <a class="navbar-brand m-0" href=" {{ route('home') }} " target="_blank">
+                <a class="navbar-brand m-0" href=" {{  route('home') }} "
+                    target="_blank">
                     <img src="../assets/img/logo-ct-dark.png" class="navbar-brand-img h-100" alt="main_logo">
                     <span class="ms-1 font-weight-bold">JTMK SUPERVISOR</span>
                 </a>
@@ -50,7 +51,7 @@
             <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link " href="{{ route('student_page', ['id' => 'dashboard']) }}">
+                        <a class="nav-link " href="{{ route('staff_page', ['id' => 'dashboard']) }}">
                             <div
                                 class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                                 <i class="ni ni-tv-2 text-primary text-sm opacity-10"></i>
@@ -59,10 +60,10 @@
                         </a>
                     </li>
                     <li class="nav-item mt-3">
-                        <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">MANAGE PROFILE</h6>
+                        <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">PROFILE</h6>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link " href="{{ route('student_page', ['id' => 'update_profile']) }}">
+                        <a class="nav-link " href="{{ route('staff_page', ['id' => 'update_profile']) }}">
                             <div
                                 class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                                 <i class="ni ni-single-copy-04 text-warning text-sm opacity-10"></i>
@@ -71,7 +72,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link  " href="{{ route('student_page', ['id' => 'change_password']) }}">
+                        <a class="nav-link active" href="{{ route('staff_page', ['id' => 'change_password']) }}">
                             <div
                                 class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                                 <i class="ni ni-single-copy-04 text-warning text-sm opacity-10"></i>
@@ -80,24 +81,24 @@
                         </a>
                     </li>
                     <li class="nav-item mt-3">
-                        <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">SUPERVISOR</h6>
+                        <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Supervisee</h6>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="{{ route('student_page', ['id' => 'supervisor_list']) }}">
+                        <a class="nav-link " href="{{ route('staff_page', ['id' => 'manage_supervisee']) }}">
                             <div
                                 class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                                 <i class="ni ni-collection text-info text-sm opacity-10"></i>
                             </div>
-                            <span class="nav-link-text ms-1">Supervisor List</span>
+                            <span class="nav-link-text ms-1">Manage Supervisee</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link " href="{{ route('student_page', ['id' => 'staff_directory']) }}">
+                        <a class="nav-link " href="{{ route('staff_page', ['id' => 'supervisor_request']) }}">
                             <div
                                 class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                                 <i class="ni ni-collection text-info text-sm opacity-10"></i>
                             </div>
-                            <span class="nav-link-text ms-1">Staff Directory</span>
+                            <span class="nav-link-text ms-1">Supervisor Request</span>
                         </a>
                 </ul>
             </div>
@@ -253,8 +254,13 @@
                     <div class="row gx-4">
                         <div class="col-auto">
                             <div class="avatar avatar-xl position-relative">
-                                <img src="https://cdn-icons-png.flaticon.com/512/3135/3135755.png" alt="profile_image"
-                                    class="w-100 border-radius-lg shadow-sm">
+                                     @if (file_exists(public_path('downloadable/staff_img/' . Auth::user()->email . '.jpg')))
+                                    <img src="{{ asset('downloadable/staff_img/' . Auth::user()->email . '.jpg') }}"
+                                    class="w-90 h-100 border-radius-lg shadow-sm">
+                                @else
+                                    <img src="{{ asset('downloadable/staff_img/empty_profile.jpg') }}"
+                                    class="w-90 h-100  border-radius-lg shadow-sm">
+                                @endif
                             </div>
                         </div>
                         <div class="col-auto my-auto">
@@ -292,145 +298,128 @@
             <!-- ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
             <div class="container-fluid py-4">
                 <div class="row">
-                    <div class="col-md-13 py-2">
+
+                    <div class="col-md-3 py-2">
+                    </div>
+
+                    <div class="col-md-5 py-2">
                         <div class="card">
-                            <div class="card-header mx-4 p-3 text-center">
-                                <div
-                                    class="icon icon-shape icon-lg bg-gradient-primary shadow text-center border-radius-lg">
-                                    <i class="fas fa-duotone fa-quote-left"></i>
-                                </div>
-                                <div>
-                                    <br>
-                                    <a>Supervisor List</a>
-                                    <hr class="horizontal dark my-3">
-                                </div>
-                                <div class="table-responsive p-0">
-                                    <table class="table align-items-center mb-0">
-                                        <thead>
-                                            <tr>
-                                                <th>
-
-                                                </th>
-                                                <th
-                                                    class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                    Track</th>
-                                                <th
-                                                    class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                    Status</th>
-                                                <th
-                                                    class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                    profile</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach ($supervisors as $staff)
-                                                @if (is_array($staff) && array_key_exists('name', $staff))
-                                                    <tr>
-                                                        <td>
-                                                            <div class="d-flex px-2 py-1">
-                                                                <div>
-                                                                    @if (file_exists(public_path('downloadable/staff_img/' . $staff['email'] . '.jpg')))
-                                                                        <img src="{{ asset('downloadable/staff_img/' . $staff['email'] . '.jpg') }}"
-                                                                            class="avatar avatar-sm me-3" alt="">
-                                                                    @else
-                                                                        <img src="{{ asset('downloadable/staff_img/empty_profile.jpg') }}"
-                                                                            class="avatar avatar-sm me-3" alt="">
-                                                                    @endif
-                                                                </div>
-                                                                <div class="d-flex flex-column justify-content-center">
-                                                                    <h6 class="mb-0 text-sm">{{ $staff['name'] }}</h6>
-                                                                    <p class="text-xs text-secondary mb-0">
-                                                                        {{ $staff['email'] }}</p>
-                                                                </div>
-
-                                                            </div>
-                                </div>
-                                </td>
-                                <td>
-                                    <p class="text-xs text-secondary mb-0">{{ $staff['track'] }}</p>
-                                </td>
-                                <td class="align-middle text-center text-sm">
-                                    @if (intval($staff['quota']) >= intval($globalAdmin->quota))
-                                        <span class="badge badge-sm bg-gradient-danger">FULL</span>
-                                    @else
-                                        <span class="badge badge-sm bg-gradient-success">AVAILABLE</span>
+                            <form id="update-form" action="{{ route('changeStaffPassword') }}" method="POST">
+                                @csrf
+                                <div class="card-header mx-4 p-3 text-center">
+                                    @if (isset($_GET['errors']))
+                                        <div class="alert alert-danger" role="alert">
+                                            <a style="color: white"> {{ $_GET['errors'] }} </a>
+                                        </div>
                                     @endif
-                                </td>
-                                <td class="align-middle text-center text-sm">
-                                    <button type="button" {{-- onclick="location.href='{{ asset('downloadable/abstract') }}/{{ $currentStudent->email }}.pdf'" --}}
-                                        onclick="location.href='{{ asset('downloadable/staff_img/empty_profile.jpg') }}'"
-                                        class="btn btn-link text-dark text-sm mb-0 px-0 ms-4"><i
-                                            class="fas fa-user text-lg me-1"></i></button>
-                                </td>
-                                </tr>
-                                @endif
-                                @endforeach
-                                </tbody>
-                                </table>
-                            </div>
+                                    @if (isset($_GET['success']))
+                                        <div class="alert alert-success" role="alert">
+                                            <a style="color: white"> {{ $_GET['success'] }} </a>
+                                        </div>
+                                    @endif
+                                    <div
+                                        class="icon icon-shape icon-lg bg-gradient-primary shadow text-center border-radius-lg">
+                                        <i class="fas fa-duotone fa-quote-left"></i>
+                                    </div>
+                                </div>
+                                <div class="card-body pt-0 p-3 text-center">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <a>Change your password here</a>
+                                            <hr class="horizontal dark my-3">
+                                            <label for="example-text-input" class="form-control-label">Current
+                                                Password</label>
+                                            <br>
+                                            <input class="form-control" type="password" name="txtCurrentPassword" required>
+                                            <input class="form-control" type="text" name="txtEmail" value="{{ Auth::user()->email }}" hidden>
+                                        </div>
+                                    </div>
 
+                                    <hr class="horizontal dark my-3">
+
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="example-text-input" class="form-control-label">New
+                                                Password</label>
+                                            <br>
+                                            <input class="form-control" type="password" name="txtNewPassword" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="example-text-input" class="form-control-label">Confirm New
+                                                Password</label>
+                                            <br>
+                                            <input class="form-control" type="password" name="txtNewPassword_confirmation" required>
+                                        </div>
+                                    </div>
+                                    <h5 class="mb-0"></h5>
+                                </div>
+                                <div class="text-center"">
+                                    <button type="submit" class="btn btn-success">Submit</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <footer class="footer pt-3  ">
+                        <div class="container-fluid">
+                            <br><br><br><br><br>
+
+                        </div>
+                    </footer>
+                </div>
+            </div>
+            <div class="fixed-plugin">
+                <a class="fixed-plugin-button text-dark position-fixed px-3 py-2">
+                    <i class="fa fa-cog py-2"> </i>
+                </a>
+                <div class="card shadow-lg">
+                    <div class="card-header pb-0 pt-3 ">
+                        <div class="float-start">
+                            <h5 class="mt-3 mb-0">About</h5>
+                        </div>
+                        <div class="float-end mt-4">
+                            <button class="btn btn-link text-dark p-0 fixed-plugin-close-button">
+                                <i class="fa fa-close"></i>
+                            </button>
+                        </div>
+                        <!-- End Toggle Button -->
+                    </div>
+                    <hr class="horizontal dark my-1">
+                    <div class="card-body pt-sm-3 pt-0 overflow-auto">
+                        <p>This project is created for Jabatan Teknologi Maklumat & Komunikasi Politeknik Ungku Omar.</p>
+                        <div class="w-100 text-center">
+                            <h6 class="mt-3">Check us out!</h6>
+                            <a href="https://gementar.com" class="btn btn-dark mb-0 me-2" target="_blank">
+                                <i class="fab fa-earth-asia me-1" aria-hidden="true"></i> Website
+                            </a>
+                            <a href="https://github.com/themuhdhilmi/daftartprojekjtmk" class="btn btn-dark mb-0 me-2"
+                                target="_blank">
+                                <i class="fab fa-github-square me-1" aria-hidden="true"></i> Github
+                            </a>
                         </div>
                     </div>
                 </div>
-
-                <footer class="footer pt-3  ">
-                    <div class="container-fluid">
-                        <br><br><br><br><br>
-
-                    </div>
-                </footer>
             </div>
-        </div>
-        <div class="fixed-plugin">
-            <a class="fixed-plugin-button text-dark position-fixed px-3 py-2">
-                <i class="fa fa-cog py-2"> </i>
-            </a>
-            <div class="card shadow-lg">
-                <div class="card-header pb-0 pt-3 ">
-                    <div class="float-start">
-                        <h5 class="mt-3 mb-0">About</h5>
-                    </div>
-                    <div class="float-end mt-4">
-                        <button class="btn btn-link text-dark p-0 fixed-plugin-close-button">
-                            <i class="fa fa-close"></i>
-                        </button>
-                    </div>
-                    <!-- End Toggle Button -->
-                </div>
-                <hr class="horizontal dark my-1">
-                <div class="card-body pt-sm-3 pt-0 overflow-auto">
-                    <p>This project is created for Jabatan Teknologi Maklumat & Komunikasi Politeknik Ungku Omar.</p>
-                    <div class="w-100 text-center">
-                        <h6 class="mt-3">Check us out!</h6>
-                        <a href="https://gementar.com" class="btn btn-dark mb-0 me-2" target="_blank">
-                            <i class="fab fa-earth-asia me-1" aria-hidden="true"></i> Website
-                        </a>
-                        <a href="https://github.com/themuhdhilmi/daftartprojekjtmk" class="btn btn-dark mb-0 me-2"
-                            target="_blank">
-                            <i class="fab fa-github-square me-1" aria-hidden="true"></i> Github
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!--   Core JS Files   -->
-        <script src="../assets/js/core/popper.min.js"></script>
-        <script src="../assets/js/core/bootstrap.min.js"></script>
-        <script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
-        <script src="../assets/js/plugins/smooth-scrollbar.min.js"></script>
-        <script>
-            var win = navigator.platform.indexOf('Win') > -1;
-            if (win && document.querySelector('#sidenav-scrollbar')) {
-                var options = {
-                    damping: '0.5'
+            <!--   Core JS Files   -->
+            <script src="../assets/js/core/popper.min.js"></script>
+            <script src="../assets/js/core/bootstrap.min.js"></script>
+            <script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
+            <script src="../assets/js/plugins/smooth-scrollbar.min.js"></script>
+            <script>
+                var win = navigator.platform.indexOf('Win') > -1;
+                if (win && document.querySelector('#sidenav-scrollbar')) {
+                    var options = {
+                        damping: '0.5'
+                    }
+                    Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
                 }
-                Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
-            }
-        </script>
-        <!-- Github buttons -->
-        <script async defer src="https://buttons.github.io/buttons.js"></script>
-        <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
-        <script src="../assets/js/argon-dashboard.min.js?v=2.0.4"></script>
+            </script>
+            <!-- Github buttons -->
+            <script async defer src="https://buttons.github.io/buttons.js"></script>
+            <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
+            <script src="../assets/js/argon-dashboard.min.js?v=2.0.4"></script>
     </body>
 
     </html>

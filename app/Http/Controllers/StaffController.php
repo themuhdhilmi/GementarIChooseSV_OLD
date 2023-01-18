@@ -1,11 +1,13 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\GlobalAdmin;
 use App\Models\StaffMain;
 use App\Models\StaffStudent;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Support\Facades\Hash;
 use Symfony\Component\HttpFoundation\Request;
+use Validator;
 
 class StaffController extends Controller
 {
@@ -193,6 +195,138 @@ class StaffController extends Controller
         }
 
         return response()->json(['succes' => $sucess, 'error' => $error], 201);
+    }
+
+    public function changeStaffPassword(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'txtCurrentPassword' => 'required|string',
+            'txtNewPassword' => 'required|string|min:8|confirmed',
+            'txtEmail' => 'required|email',
+        ]);
+
+        if ($validator->fails()) {
+            //return response()->json(['errors' => $validator->errors()], 400);
+
+            $stringErrorCollection = '';
+
+            $errors = $validator->errors();
+            foreach ($errors->all() as $error) {
+                $stringErrorCollection = $stringErrorCollection . $error;
+            }
+
+
+            return redirect()->route('staff_page', ['id' => 'change_password', 'errors' => $stringErrorCollection]);
+        }
+
+
+        $user = User::where('email', $request->input('txtEmail'))->first();
+
+
+        if (!Hash::check($request->txtCurrentPassword, $user->password)) {
+            //return response()->json(['errors' => 'The provided old password is incorrect.'], 400);
+
+            return redirect()->route('staff_page', ['id' => 'change_password', 'errors' => 'Old password not match.']);
+        }
+
+        // Update the user's password
+        $user->password = Hash::make($request->txtNewPassword);
+        $user->save();
+
+        return redirect()->route('staff_page', ['id' => 'change_password','success' => 'Password successfully changed.']);
+
+    }
+
+    public function supervisorRequest(Request $request)
+    {
+
+        $validator = Validator::make($request->all(), [
+            'txtEmail' => 'required|string',
+            'txtStudentEmail' => 'required|string',
+            'buttonSelected' => 'required|string',
+        ]);
+
+        if($request->input('buttonSelected') == 'approve')
+        {
+            $currentSuperviseeRequest = StaffStudent::where('email_staff', $request->input('txtEmail'))->where('is_confirmed', '0')->get();
+            $currentSuperviseeCount = StaffStudent::where('email_staff', $request->input('txtEmail'))->where('is_confirmed', '1')->count();
+            $globalAdmin = GlobalAdmin::all()->first();
+
+            if(intval($currentSuperviseeCount) >= intval($globalAdmin->quota))
+            {
+                //If quota exceeded, remove all request.
+                foreach ($currentSuperviseeRequest as $user) {
+
+                    StaffStudent::where('email', $user->email)->update([
+                        'email_staff' => '',
+                        'is_confirmed' => 0
+                    ]);
+
+                }
+                return redirect()->route('staff_page', ['id' => 'supervisor_request', 'errors' => 'Quota limit reached, declined all request']);
+                //return response()->json(['errors' => 'Quota limit reached, declined all request']);
+            }
+
+            StaffStudent::where('email', $request->input('txtStudentEmail'))->update([
+                'is_confirmed' => 1
+            ]);
+
+            $currentSuperviseeRequest = StaffStudent::where('email_staff', $request->input('txtEmail'))->where('is_confirmed', '0')->get();
+            $currentSuperviseeCount = StaffStudent::where('email_staff', $request->input('txtEmail'))->where('is_confirmed', '1')->count();
+            $globalAdmin = GlobalAdmin::all()->first();
+
+            if(intval($currentSuperviseeCount) >= intval($globalAdmin->quota))
+            {
+                //If quota exceeded, remove all request.
+                foreach ($currentSuperviseeRequest as $user) {
+
+                    StaffStudent::where('email', $user->email)->update([
+                        'email_staff' => '',
+                        'is_confirmed' => 0
+                    ]);
+
+                }
+                return redirect()->route('staff_page', ['id' => 'supervisor_request', 'success' => 'Success! Students accepted. Limit reached, decline the rest of students']);
+                //return response()->json(['success' => 'Success! Students accepted. Limit reached, decline the rest of students']);
+            }
+
+            return redirect()->route('staff_page', ['id' => 'supervisor_request','success' => 'Success! Students accepted.']);
+            //return response()->json(['success' => 'Success! Students accepted.']);
+        }
+
+        if($request->input('buttonSelected') == 'decline')
+        {
+            $currentSuperviseeRequest = StaffStudent::where('email_staff', $request->input('txtEmail'))->where('is_confirmed', '0')->get();
+            $currentSuperviseeCount = StaffStudent::where('email_staff', $request->input('txtEmail'))->where('is_confirmed', '1')->count();
+            $globalAdmin = GlobalAdmin::all()->first();
+
+            if(intval($currentSuperviseeCount) >= intval($globalAdmin->quota))
+            {
+                //If quota exceeded, remove all request.
+                foreach ($currentSuperviseeRequest as $user) {
+
+                    StaffStudent::where('email', $user->email)->update([
+                        'email_staff' => '',
+                        'is_confirmed' => 0
+                    ]);
+
+                }
+                return redirect()->route('staff_page', ['id' => 'supervisor_request','success' => 'Quota limit reached, all request automatically declined.']);
+                //return response()->json(['success' => 'Quota limit reached, declined all request']);
+            }
+
+            StaffStudent::where('email', $request->input('txtStudentEmail'))->update([
+                'email_staff' => '',
+                'is_confirmed' => 0
+            ]);
+
+            return redirect()->route('staff_page', ['id' => 'supervisor_request','success' => 'Success! Students declined.']);
+            //return response()->json(['success' => 'Success! Students declined.']);
+        }
+
+
+        return redirect()->route('staff_page', ['id' => 'supervisor_request', 'errors' => 'Something gone wrong!']);
+        //return response()->json(['errors' => 'Something gone wrong!']);
     }
 
 }

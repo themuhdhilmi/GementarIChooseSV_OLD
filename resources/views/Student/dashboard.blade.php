@@ -389,6 +389,8 @@
                                                                 class="btn btn-link text-dark text-sm mb-0 px-0 ms-4"><i
                                                                     class="fas fa-file-pdf text-lg me-1"></i>Abstract</button>
 
+                                                                    <input name="lecturerEmail" value={{ Auth::user()->email }} hidden>
+
                                                             <button type="button"
                                                                 onclick="location.href='{{ asset('downloadable/poster_proposal') }}/{{ $currentStudent->email }}.pdf'"
                                                                 class="btn btn-link text-dark text-sm mb-0 px-0 ms-4"><i

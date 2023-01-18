@@ -474,14 +474,14 @@ class StudentController extends Controller
         if (!Hash::check($request->txtCurrentPassword, $user->password)) {
             //return response()->json(['errors' => 'The provided old password is incorrect.'], 400);
 
-            return redirect()->route('student_page', ['id' => 'change_password', 'erros' => 'Old password not match.']);
+            return redirect()->route('student_page', ['id' => 'change_password', 'errors' => 'Old password not match.']);
         }
 
         // Update the user's password
         $user->password = Hash::make($request->txtNewPassword);
         $user->save();
 
-        return response()->json(['success' => 'Password successfully changed.'], 200);
+        return redirect()->route('student_page', ['id' => 'change_password','success' => 'Password successfully changed.']);
 
     }
 

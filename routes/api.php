@@ -44,3 +44,8 @@ Route::post('bulkCreateStudent', [App\Http\Controllers\StudentController::class,
 //-----------------------------------------------------------------------------------------------------------------------------------
 Route::post('updateStudentProfile', [App\Http\Controllers\StudentController::class, 'updateStudentProfile'])->name('updateStudentProfile');
 Route::post('changeStudentPassword', [App\Http\Controllers\StudentController::class, 'changeStudentPassword'])->name('changeStudentPassword');
+//-----------------------------------------------------------------------------------------------------------------------------------
+                                                //      STAFF PAGE
+//-----------------------------------------------------------------------------------------------------------------------------------
+Route::post('changeStaffPassword', [App\Http\Controllers\StaffController::class, 'changeStaffPassword'])->name('changeStaffPassword');
+Route::post('supervisorRequest', [App\Http\Controllers\StaffController::class, 'supervisorRequest'])->name('supervisorRequest');

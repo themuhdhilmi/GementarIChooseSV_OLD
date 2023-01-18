@@ -3,7 +3,7 @@
 
 
 @section('content')
-    <title>JTMK Supervisor | Student Dashboard</title>
+    <title>JTMK Supervisor | Change Password</title>
     <style type="text/css">
         html {
             overflow-y: hidden;

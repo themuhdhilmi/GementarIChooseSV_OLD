@@ -6,6 +6,7 @@ use App\Models\StaffStudent;
 use App\Models\StudentList;
 use App\Models\StudentMain;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -235,4 +236,58 @@ Route::get('student_page/{id}', function ($id) {
     abort(404);
 })->name('student_page');
 
+Route::get('staff_page/{id}', function ($id) {
 
+    if (auth()->check() && auth()->user()->role == 'Staff')
+    {
+
+        $students = StudentMain::all();
+        $studentsList = StudentList::all();
+        $staffMain = StaffMain::all();
+        $staffStudents = StaffStudent::all();
+        $globalAdmin = GlobalAdmin::find(1);
+        $countCurrentStaffSupervisee = StaffStudent::where('is_confirmed', '1')->where('email_staff', Auth::user()->email)->count();
+        $countCurrentRequest = StaffStudent::where('is_confirmed', '0')->where('email_staff', Auth::user()->email)->count();
+        $MainUser = User::all();
+
+        if ($id == 'dashboard') {
+
+            return view('Staff/dashboard',  [
+                'globalAdmin' =>  $globalAdmin,
+                'students' => $students ,
+                'studentsList' => $studentsList,
+                'staffMain' => $staffMain,
+                'staffStudents' => $staffStudents,
+                'MainUser' => $MainUser,
+                'countCurrentStaffSupervisee' => $countCurrentStaffSupervisee,
+                'countCurrentRequest' => $countCurrentRequest,
+            ]);
+        }
+
+        if ($id == 'change_password') {
+
+            return view('Staff/change_password',  [
+
+            ]);
+        }
+
+        if ($id == 'supervisor_request') {
+
+            $studentsFiltered = StudentMain::join('staff_students', 'student_mains.email', '=', 'staff_students.email')->where('email_staff', Auth::user()->email)->where('is_confirmed', '0')->get();
+
+
+            return view('Staff/supervisor_request',  [
+                'globalAdmin' =>  $globalAdmin,
+                'students' => $studentsFiltered ,
+                'studentsList' => $studentsList,
+                'staffMain' => $staffMain,
+                'staffStudents' => $staffStudents,
+                'MainUser' => $MainUser,
+                'countCurrentStaffSupervisee' => $countCurrentStaffSupervisee,
+                'countCurrentRequest' => $countCurrentRequest,
+            ]);
+        }
+    }
+
+    abort(404);
+})->name('staff_page');
