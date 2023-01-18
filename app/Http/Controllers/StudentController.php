@@ -342,8 +342,6 @@ class StudentController extends Controller
 
 
         }
-
-
         /*
         *
         *   VALIDATION AND SV SELECTION PROCESS
@@ -370,6 +368,12 @@ class StudentController extends Controller
                 $global = GlobalAdmin::find(1);
 
                 // if SV quota not available
+                if(strval($quota) >= $global->quota)
+                {
+                    return redirect()->route('student_page', ['id' => 'update_profile', 'errors' => 'SV Quota reached limit.']);
+                }
+
+                // if already selected
                 if(strval($quota) >= $global->quota)
                 {
                     return redirect()->route('student_page', ['id' => 'update_profile', 'errors' => 'SV Quota reached limit.']);

@@ -287,6 +287,23 @@ Route::get('staff_page/{id}', function ($id) {
                 'countCurrentRequest' => $countCurrentRequest,
             ]);
         }
+
+        if ($id == 'manage_supervisee') {
+
+            $studentsFiltered = StudentMain::join('staff_students', 'student_mains.email', '=', 'staff_students.email')->where('email_staff', Auth::user()->email)->where('is_confirmed', '1')->get();
+
+
+            return view('Staff/manage_supervisee',  [
+                'globalAdmin' =>  $globalAdmin,
+                'students' => $studentsFiltered ,
+                'studentsList' => $studentsList,
+                'staffMain' => $staffMain,
+                'staffStudents' => $staffStudents,
+                'MainUser' => $MainUser,
+                'countCurrentStaffSupervisee' => $countCurrentStaffSupervisee,
+                'countCurrentRequest' => $countCurrentRequest,
+            ]);
+        }
     }
 
     abort(404);

@@ -83,7 +83,7 @@
                         <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Supervisee</h6>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link " href="{{ route('staff_page', ['id' => 'manage_supervisee']) }}">
+                        <a class="nav-link active" href="{{ route('staff_page', ['id' => 'manage_supervisee']) }}">
                             <div
                                 class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                                 <i class="ni ni-collection text-info text-sm opacity-10"></i>
@@ -92,7 +92,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="{{ route('staff_page', ['id' => 'supervisor_request']) }}">
+                        <a class="nav-link " href="{{ route('staff_page', ['id' => 'supervisor_request']) }}">
                             <div
                                 class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                                 <i class="ni ni-collection text-info text-sm opacity-10"></i>
@@ -318,10 +318,9 @@
                                 </div>
                             </div>
                             <div class="card-body pt-0 p-3 text-center">
-                                <h6 class="text-center mb-0">Supervisor Request</h6>
-                                <span class="text-xs">List of students requesting you to become their supervisor.</span>
+                                <h6 class="text-center mb-0">Supervisee List</h6>
+                                <span class="text-xs">List of your supervisee.</span>
                                 <br>
-                                <span class="text-xs">Your supervisee/quota. {{ $countCurrentStaffSupervisee }}/{{ $globalAdmin->quota }}</span>
                                 <hr class="horizontal dark my-3">
                                 <div class="table-responsive">
                                     <table class="table align-items-center ">
@@ -416,16 +415,7 @@
                                                     <td class="align-middle text-sm">
                                                         <div class="col text-center">
                                                             {{-- <p class="text-xs font-weight-bold mb-0">Accept/Decline:</p> --}}
-                                                            <form action="{{ route('supervisorRequest') }}" method="POST">
-                                                            @csrf
-                                                            <button type="submit"
-                                                                class="btn btn-link text-dark text-sm mb-0 px-0 ms-4"><i
-                                                                    class="fas fa-check text-lg me-1"></i></button>
-                                                                    <input class="form-control" type="text" name="txtEmail" value="{{ Auth::user()->email }}" hidden>
-                                                                    <input class="form-control" type="text" name="txtStudentEmail" value="{{ $user->email }}" hidden>
-                                                                    <input class="form-control" type="text" name="buttonSelected" value="approve" hidden>
-                                                            </form>
-                                                            <form action="{{ route('supervisorRequest') }}" method="POST">
+                                                            <form action="{{ route('superviseeDelete') }}" method="POST">
                                                                 @csrf
                                                             <button type="submit"
                                                                 class="btn btn-link text-dark text-sm mb-0 px-0 ms-4"><i

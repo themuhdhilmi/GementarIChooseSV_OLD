@@ -49,3 +49,4 @@ Route::post('changeStudentPassword', [App\Http\Controllers\StudentController::cl
 //-----------------------------------------------------------------------------------------------------------------------------------
 Route::post('changeStaffPassword', [App\Http\Controllers\StaffController::class, 'changeStaffPassword'])->name('changeStaffPassword');
 Route::post('supervisorRequest', [App\Http\Controllers\StaffController::class, 'supervisorRequest'])->name('supervisorRequest');
+Route::post('superviseeDelete', [App\Http\Controllers\StaffController::class, 'superviseeDelete'])->name('superviseeDelete');

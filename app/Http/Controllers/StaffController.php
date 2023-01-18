@@ -329,4 +329,22 @@ class StaffController extends Controller
         //return response()->json(['errors' => 'Something gone wrong!']);
     }
 
+
+    public function superviseeDelete(Request $request)
+    {
+
+        $validator = Validator::make($request->all(), [
+            'txtEmail' => 'required|string',
+            'txtStudentEmail' => 'required|string',
+        ]);
+
+            StaffStudent::where('email', $request->input('txtStudentEmail'))->update([
+                'email_staff' => '',
+                'is_confirmed' => 0
+            ]);
+
+            return redirect()->route('staff_page', ['id' => 'manage_supervisee','success' => 'Success! Students declined.']);
+            //return response()->json(['success' => 'Success! Students declined.']);
+    }
+
 }
