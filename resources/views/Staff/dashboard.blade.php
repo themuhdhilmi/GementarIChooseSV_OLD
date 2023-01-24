@@ -3,7 +3,7 @@
 
 
 @section('content')
-<title>JTMK Supervisor | Dashboard</title>
+<title>IChooseSV | Dashboard</title>
     <!--
         =========================================================
         * Argon Dashboard 2 - v2.0.4
@@ -58,7 +58,7 @@
                 <a class="navbar-brand m-0" href=" {{  route('home') }} "
                     target="_blank">
                     <img src="../assets/img/logo-ct-dark.png" class="navbar-brand-img h-100" alt="main_logo">
-                    <span class="ms-1 font-weight-bold">JTMK SUPERVISOR</span>
+                    <span class="ms-1 font-weight-bold">IChooseSV</span>
                 </a>
             </div>
             <hr class="horizontal dark mt-0">

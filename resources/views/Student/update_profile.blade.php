@@ -3,7 +3,7 @@
 
 
 @section('content')
-    <title>JTMK Supervisor | Update Profile</title>
+    <title>IChooseSV | Update Profile</title>
     <style type="text/css">
         html {
             overflow-y: hidden;
@@ -43,7 +43,7 @@
                     aria-hidden="true" id="iconSidenav"></i>
                 <a class="navbar-brand m-0" href=" {{ route('home') }} " target="_blank">
                     <img src="../assets/img/logo-ct-dark.png" class="navbar-brand-img h-100" alt="main_logo">
-                    <span class="ms-1 font-weight-bold">JTMK SUPERVISOR</span>
+                    <span class="ms-1 font-weight-bold">IChooseSV</span>
                 </a>
             </div>
             <hr class="horizontal dark mt-0">
@@ -92,7 +92,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link " href="{{ route('student_page', ['id' => 'staff_directory']) }}">
+                        <a class="nav-link " href="{{ route('staff_list', ['id' => 'list']) }}">
                             <div
                                 class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                                 <i class="ni ni-collection text-info text-sm opacity-10"></i>
@@ -503,10 +503,16 @@
                                                             aria-label="Default select example">
                                                             <option value="0" selected>None</option>
                                                             @foreach ($supervisors as $staff)
+
+
+
                                                                 @if (is_array($staff) && array_key_exists('name', $staff))
                                                                 @if(intval($staff['quota']) >=  intval($globalAdmin->quota))
                                                                     @continue
                                                                 @endif
+
+
+                                                                @if ($staff['track'] == $currentStudent->track)
                                                                     @if ($currentStudentSupervisor->email_staff == $staff['email'])
                                                                         <option value="{{ $staff['email'] }}" selected>
                                                                             {{ $staff['name'] }}</option>
@@ -514,7 +520,13 @@
                                                                     @endif
                                                                     <option value="{{ $staff['email'] }}">
                                                                         {{ $staff['name'] }}</option>
+                                                                        @endif
+
+
                                                                 @endif
+
+
+
                                                             @endforeach
                                                         </select>
                                                     @endif

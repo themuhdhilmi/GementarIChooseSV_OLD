@@ -3,7 +3,7 @@
 
 
 @section('content')
-    <title>JTMK Supervisor | Student Dashboard</title>
+    <title>IChooseSV | Student Dashboard</title>
     <style type="text/css">
         html {
             overflow-y: hidden;
@@ -43,7 +43,7 @@
                     aria-hidden="true" id="iconSidenav"></i>
                 <a class="navbar-brand m-0" href=" {{ route('home') }} " target="_blank">
                     <img src="../assets/img/logo-ct-dark.png" class="navbar-brand-img h-100" alt="main_logo">
-                    <span class="ms-1 font-weight-bold">JTMK SUPERVISOR</span>
+                    <span class="ms-1 font-weight-bold">IChooseSV</span>
                 </a>
             </div>
             <hr class="horizontal dark mt-0">
@@ -92,7 +92,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link " href="{{ route('student_page', ['id' => 'staff_directory']) }}">
+                        <a class="nav-link " href="{{ route('staff_list', ['id' => 'list']) }}">
                             <div
                                 class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                                 <i class="ni ni-collection text-info text-sm opacity-10"></i>
@@ -388,8 +388,6 @@
                                                                 onclick="location.href='{{ asset('downloadable/abstract') }}/{{ $currentStudent->email }}.pdf'"
                                                                 class="btn btn-link text-dark text-sm mb-0 px-0 ms-4"><i
                                                                     class="fas fa-file-pdf text-lg me-1"></i>Abstract</button>
-
-                                                                    <input name="lecturerEmail" value={{ Auth::user()->email }} hidden>
 
                                                             <button type="button"
                                                                 onclick="location.href='{{ asset('downloadable/poster_proposal') }}/{{ $currentStudent->email }}.pdf'"

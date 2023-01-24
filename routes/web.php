@@ -28,8 +28,7 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('ho
 
 Route::get('admin_page/{id}', function ($id) {
 
-    if (auth()->check() && auth()->user()->role == 'Admin')
-    {
+    if (auth()->check() && auth()->user()->role == 'Admin') {
 
         $students = StudentMain::all();
         $studentsList = StudentList::all();
@@ -42,9 +41,9 @@ Route::get('admin_page/{id}', function ($id) {
 
         if ($id == 'dashboard') {
 
-            return view('Admin/dashboard',  [
-                'globalAdmin' =>  $globalAdmin,
-                'students' => $students ,
+            return view('Admin/dashboard', [
+                'globalAdmin' => $globalAdmin,
+                'students' => $students,
                 'studentsList' => $studentsList,
                 'staffMain' => $staffMain,
                 'staffStudents' => $staffStudents,
@@ -55,9 +54,9 @@ Route::get('admin_page/{id}', function ($id) {
 
         if ($id == 'manage_admin') {
 
-            return view('Admin/manage_admin',  [
-                'globalAdmin' =>  $globalAdmin,
-                'students' => $students ,
+            return view('Admin/manage_admin', [
+                'globalAdmin' => $globalAdmin,
+                'students' => $students,
                 'studentsList' => $studentsList,
                 'staffMain' => $staffMain,
                 'staffStudents' => $staffStudents,
@@ -68,9 +67,9 @@ Route::get('admin_page/{id}', function ($id) {
 
         if ($id == 'manage_staff') {
 
-            return view('Admin/manage_staff',  [
-                'globalAdmin' =>  $globalAdmin,
-                'students' => $students ,
+            return view('Admin/manage_staff', [
+                'globalAdmin' => $globalAdmin,
+                'students' => $students,
                 'studentsList' => $studentsList,
                 'staffMain' => $staffMain,
                 'staffStudents' => $staffStudents,
@@ -81,9 +80,9 @@ Route::get('admin_page/{id}', function ($id) {
 
         if ($id == 'bulk_add_staff') {
 
-            return view('Admin/bulk_add_staff',  [
-                'globalAdmin' =>  $globalAdmin,
-                'students' => $students ,
+            return view('Admin/bulk_add_staff', [
+                'globalAdmin' => $globalAdmin,
+                'students' => $students,
                 'studentsList' => $studentsList,
                 'staffMain' => $staffMain,
                 'staffStudents' => $staffStudents,
@@ -94,8 +93,8 @@ Route::get('admin_page/{id}', function ($id) {
 
         if ($id == 'manage_student') {
 
-            return view('Admin/manage_student',  [
-                'globalAdmin' =>  $globalAdmin,
+            return view('Admin/manage_student', [
+                'globalAdmin' => $globalAdmin,
                 'students' => $students,
                 'studentsList' => $studentsList,
                 'staffMain' => $staffMain,
@@ -107,8 +106,8 @@ Route::get('admin_page/{id}', function ($id) {
 
         if ($id == 'global_value') {
 
-            return view('Admin/global_value',  [
-                'globalAdmin' =>  $globalAdmin,
+            return view('Admin/global_value', [
+                'globalAdmin' => $globalAdmin,
                 'students' => $students,
                 'studentsList' => $studentsList,
                 'staffMain' => $staffMain,
@@ -121,8 +120,8 @@ Route::get('admin_page/{id}', function ($id) {
 
         if ($id == 'bulk_add_student') {
 
-            return view('Admin/bulk_add_student',  [
-                'globalAdmin' =>  $globalAdmin,
+            return view('Admin/bulk_add_student', [
+                'globalAdmin' => $globalAdmin,
                 'students' => $students,
                 'studentsList' => $studentsList,
                 'staffMain' => $staffMain,
@@ -138,8 +137,7 @@ Route::get('admin_page/{id}', function ($id) {
 
 Route::get('student_page/{id}', function ($id) {
 
-    if (auth()->check() && auth()->user()->role == 'Student')
-    {
+    if (auth()->check() && auth()->user()->role == 'Student') {
 
         $students = StudentMain::all();
         $studentsList = StudentList::all();
@@ -156,9 +154,9 @@ Route::get('student_page/{id}', function ($id) {
         $currentStudentSupervisorUser = User::where('email', $currentStudentSupervisor->email_staff)->first();
         if ($id == 'dashboard') {
 
-            return view('Student/dashboard',  [
-                'currentStudent' =>  $currentStudent,
-                'currentStudentGroupMember' => $currentStudentGroupMember ,
+            return view('Student/dashboard', [
+                'currentStudent' => $currentStudent,
+                'currentStudentGroupMember' => $currentStudentGroupMember,
                 'currentStudentSupervisor' => $currentStudentSupervisor,
                 'currentStudentSupervisorUser' => $currentStudentSupervisorUser
             ]);
@@ -169,8 +167,7 @@ Route::get('student_page/{id}', function ($id) {
             $supervisorThatCanSupervise = StaffMain::where('can_supervise', '1')->get();
             $supervisors[] = array();
 
-            foreach ($supervisorThatCanSupervise as $supervisor)
-            {
+            foreach ($supervisorThatCanSupervise as $supervisor) {
                 $selected = User::where('email', $supervisor->email)->first();
                 $quota = StaffStudent::where('email_staff', $supervisor->email)->where('is_confirmed', '1')->count();
 
@@ -178,13 +175,14 @@ Route::get('student_page/{id}', function ($id) {
                     [
                         'name' => $selected->name,
                         'email' => $supervisor->email,
-                        'quota' =>  $quota
+                        'quota' => $quota,
+                        'track' => $supervisor->track
                     ];
             }
 
-            return view('Student/update_profile',  [
-                'currentStudent' =>  $currentStudent,
-                'currentStudentGroupMember' => $currentStudentGroupMember ,
+            return view('Student/update_profile', [
+                'currentStudent' => $currentStudent,
+                'currentStudentGroupMember' => $currentStudentGroupMember,
                 'currentStudentSupervisor' => $currentStudentSupervisor,
                 'currentStudentSupervisorUser' => $currentStudentSupervisorUser,
                 'supervisors' => $supervisors,
@@ -194,9 +192,9 @@ Route::get('student_page/{id}', function ($id) {
 
         if ($id == 'change_password') {
 
-            return view('Student/change_password',  [
-                'currentStudent' =>  $currentStudent,
-                'currentStudentGroupMember' => $currentStudentGroupMember ,
+            return view('Student/change_password', [
+                'currentStudent' => $currentStudent,
+                'currentStudentGroupMember' => $currentStudentGroupMember,
                 'currentStudentSupervisor' => $currentStudentSupervisor,
                 'currentStudentSupervisorUser' => $currentStudentSupervisorUser
             ]);
@@ -207,8 +205,7 @@ Route::get('student_page/{id}', function ($id) {
             $supervisorThatCanSupervise = StaffMain::where('can_supervise', '1')->get();
             $supervisors[] = array();
 
-            foreach ($supervisorThatCanSupervise as $supervisor)
-            {
+            foreach ($supervisorThatCanSupervise as $supervisor) {
                 $selected = User::where('email', $supervisor->email)->first();
                 $quota = StaffStudent::where('email_staff', $supervisor->email)->where('is_confirmed', '1')->count();
                 $staffMain = StaffMain::where('email', $supervisor->email)->first();
@@ -217,14 +214,14 @@ Route::get('student_page/{id}', function ($id) {
                     [
                         'name' => $selected->name,
                         'email' => $supervisor->email,
-                        'quota' =>  $quota,
+                        'quota' => $quota,
                         'track' => $staffMain->track,
                     ];
             }
 
-            return view('Student/supervisor_list',  [
-                'currentStudent' =>  $currentStudent,
-                'currentStudentGroupMember' => $currentStudentGroupMember ,
+            return view('Student/supervisor_list', [
+                'currentStudent' => $currentStudent,
+                'currentStudentGroupMember' => $currentStudentGroupMember,
                 'currentStudentSupervisor' => $currentStudentSupervisor,
                 'currentStudentSupervisorUser' => $currentStudentSupervisorUser,
                 'supervisors' => $supervisors,
@@ -239,8 +236,7 @@ Route::get('student_page/{id}', function ($id) {
 
 Route::get('staff_page/{id}', function ($id) {
 
-    if (auth()->check() && auth()->user()->role == 'Staff')
-    {
+    if (auth()->check() && auth()->user()->role == 'Staff') {
 
         $students = StudentMain::all();
         $studentsList = StudentList::all();
@@ -253,9 +249,9 @@ Route::get('staff_page/{id}', function ($id) {
 
         if ($id == 'dashboard') {
 
-            return view('Staff/dashboard',  [
-                'globalAdmin' =>  $globalAdmin,
-                'students' => $students ,
+            return view('Staff/dashboard', [
+                'globalAdmin' => $globalAdmin,
+                'students' => $students,
                 'studentsList' => $studentsList,
                 'staffMain' => $staffMain,
                 'staffStudents' => $staffStudents,
@@ -267,7 +263,7 @@ Route::get('staff_page/{id}', function ($id) {
 
         if ($id == 'change_password') {
 
-            return view('Staff/change_password',  [
+            return view('Staff/change_password', [
 
             ]);
         }
@@ -277,9 +273,9 @@ Route::get('staff_page/{id}', function ($id) {
             $studentsFiltered = StudentMain::join('staff_students', 'student_mains.email', '=', 'staff_students.email')->where('email_staff', Auth::user()->email)->where('is_confirmed', '0')->get();
 
 
-            return view('Staff/supervisor_request',  [
-                'globalAdmin' =>  $globalAdmin,
-                'students' => $studentsFiltered ,
+            return view('Staff/supervisor_request', [
+                'globalAdmin' => $globalAdmin,
+                'students' => $studentsFiltered,
                 'studentsList' => $studentsList,
                 'staffMain' => $staffMain,
                 'staffStudents' => $staffStudents,
@@ -294,9 +290,9 @@ Route::get('staff_page/{id}', function ($id) {
             $studentsFiltered = StudentMain::join('staff_students', 'student_mains.email', '=', 'staff_students.email')->where('email_staff', Auth::user()->email)->where('is_confirmed', '1')->get();
 
 
-            return view('Staff/manage_supervisee',  [
-                'globalAdmin' =>  $globalAdmin,
-                'students' => $studentsFiltered ,
+            return view('Staff/manage_supervisee', [
+                'globalAdmin' => $globalAdmin,
+                'students' => $studentsFiltered,
                 'studentsList' => $studentsList,
                 'staffMain' => $staffMain,
                 'staffStudents' => $staffStudents,
@@ -314,9 +310,9 @@ Route::get('staff_page/{id}', function ($id) {
 
             $currentStaffInfos = StaffInfo::where('email', Auth::user()->email)->get();
 
-            return view('Staff/update_profile',  [
-                'globalAdmin' =>  $globalAdmin,
-                'students' => $studentsFiltered ,
+            return view('Staff/update_profile', [
+                'globalAdmin' => $globalAdmin,
+                'students' => $studentsFiltered,
                 'studentsList' => $studentsList,
                 'staffMain' => $staffMain,
                 'staffStudents' => $staffStudents,
@@ -331,3 +327,68 @@ Route::get('staff_page/{id}', function ($id) {
 
     abort(404);
 })->name('staff_page');
+
+Route::get('staff/{id}', function ($id) {
+    $staffUsers = User::where('role', 'Staff')->get();
+    $staffMains = StaffMain::all();
+
+    if ($id == 'list') {
+        return view('Staff_List/list', [
+            'staffUsers' => $staffUsers,
+            'staffMains' => $staffMains,
+        ]);
+    }
+
+    if ($id == 'profile') {
+
+
+        $email = request()->input('email');
+        $staffUser = User::where('email', $email)->first();
+        $staffMain = StaffMain::where('email', $email)->first();
+
+        $staffInfoResearch = StaffInfo::where('email', $email)->where('category', 'research')->get();
+        $staffInfoArticle = StaffInfo::where('email', $email)->where('category', 'article')->get();
+        $staffInfoProceeding = StaffInfo::where('email', $email)->where('category', 'proceeding')->get();
+        $staffInfoOthers = StaffInfo::where('email', $email)->where('category', 'others')->get();
+        $staffInfoSupervision = StaffInfo::where('email', $email)->where('category', 'supervision')->get();
+        $staffInfoConsultation = StaffInfo::where('email', $email)->where('category', 'consultation')->get();
+        $staffInfoAward_Recognition = StaffInfo::where('email', $email)->where('category', 'award_recognition')->get();
+
+        $staffInfoResearchCount = StaffInfo::where('email', $email)->where('category', 'research')->count();
+        $staffInfoArticleCount = StaffInfo::where('email', $email)->where('category', 'article')->count();
+        $staffInfoProceedingCount = StaffInfo::where('email', $email)->where('category', 'proceeding')->count();
+        $staffInfoOthersCount = StaffInfo::where('email', $email)->where('category', 'others')->count();
+        $staffInfoSupervisionCount = StaffInfo::where('email', $email)->where('category', 'supervision')->count();
+        $staffInfoConsultationCount = StaffInfo::where('email', $email)->where('category', 'consultation')->count();
+        $staffInfoAward_RecognitionCount = StaffInfo::where('email', $email)->where('category', 'award_recognition')->count();
+
+        $staffInfoPublicationCount = intval($staffInfoArticleCount) + intval($staffInfoProceedingCount) + intval($staffInfoOthersCount);
+
+        $staffInfoTotalAll = intval($staffInfoResearchCount) + intval($staffInfoArticleCount) + intval($staffInfoProceedingCount) + intval($staffInfoOthersCount) + intval($staffInfoSupervisionCount) + intval($staffInfoConsultationCount)  + intval($staffInfoAward_RecognitionCount);
+
+
+        return view('Staff_List/profile', [
+            'email' => $email,
+            'staffUser' =>$staffUser,
+            'staffMain' =>$staffMain,
+            'staffInfoResearch' =>$staffInfoResearch,
+            'staffInfoArticle' =>$staffInfoArticle,
+            'staffInfoProceeding' =>$staffInfoProceeding,
+            'staffInfoOthers' =>$staffInfoOthers,
+            'staffInfoSupervision' =>$staffInfoSupervision,
+            'staffInfoConsultation' =>$staffInfoConsultation,
+            'staffInfoAward_Recognition' =>$staffInfoAward_Recognition,
+            'staffInfoResearchCount' =>$staffInfoResearchCount,
+            'staffInfoArticleCount' =>$staffInfoArticleCount,
+            'staffInfoProceedingCount' => $staffInfoProceedingCount,
+            'staffInfoOthersCount' => $staffInfoOthersCount,
+            'staffInfoSupervisionCount' =>$staffInfoSupervisionCount,
+            'staffInfoConsultationCount' =>$staffInfoConsultationCount,
+            'staffInfoAward_RecognitionCount' =>$staffInfoAward_RecognitionCount,
+            'staffInfoPublicationCount' => $staffInfoPublicationCount,
+            'staffInfoTotalAll' => $staffInfoTotalAll
+
+        ]);
+    }
+
+})->name('staff_list');

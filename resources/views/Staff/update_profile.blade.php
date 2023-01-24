@@ -3,7 +3,7 @@
 
 
 @section('content')
-    <title>JTMK Supervisor | Manage Staff</title>
+    <title>IChooseSV | Manage Staff</title>
     <style type="text/css">
         html {
             overflow-y: hidden;
@@ -43,7 +43,7 @@
                     aria-hidden="true" id="iconSidenav"></i>
                 <a class="navbar-brand m-0" href=" {{ route('home') }} " target="_blank">
                     <img src="../assets/img/logo-ct-dark.png" class="navbar-brand-img h-100" alt="main_logo">
-                    <span class="ms-1 font-weight-bold">JTMK SUPERVISOR</span>
+                    <span class="ms-1 font-weight-bold">IChooseSV</span>
                 </a>
             </div>
             <hr class="horizontal dark mt-0">
@@ -306,6 +306,14 @@
                             <div class="card-body pt-0 p-3">
                                 <h6 class="text-uppercase text-xs font-weight-bolder opacity-6">Supervisee</h6>
                                 <hr class="horizontal dark my-3">
+                                <button type="button"
+                                    class="btn
+
+                                btn-secondary
+
+                                w-100"
+                                    onclick="location.href='{{ route('staff_list', ['id' => 'profile']) }}?email={{ Auth::user()->email }}'">Profile</button>
+
                                 <button type="button"
                                     class="btn
                                 @if (isset($_GET['profile_picture'])) btn-primary
@@ -1135,8 +1143,8 @@
                                                     class="form-control-label">Status</label>
                                                 <select name="selectStatus" class="form-select"
                                                     aria-label="Default select example" required>
-                                                    <option value="leader" selected>Completed</option>
-                                                    <option value="member">Pending</option>
+                                                    <option value="completed" selected>Completed</option>
+                                                    <option value="pending">Pending</option>
                                                 </select>
                                             </div>
                                         </div>
