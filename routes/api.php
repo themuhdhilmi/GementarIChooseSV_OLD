@@ -50,3 +50,13 @@ Route::post('changeStudentPassword', [App\Http\Controllers\StudentController::cl
 Route::post('changeStaffPassword', [App\Http\Controllers\StaffController::class, 'changeStaffPassword'])->name('changeStaffPassword');
 Route::post('supervisorRequest', [App\Http\Controllers\StaffController::class, 'supervisorRequest'])->name('supervisorRequest');
 Route::post('superviseeDelete', [App\Http\Controllers\StaffController::class, 'superviseeDelete'])->name('superviseeDelete');
+Route::post('updateProfilePicture', [App\Http\Controllers\StaffController::class, 'updateProfilePicture'])->name('updateProfilePicture');
+Route::post('updateAdditionInformation', [App\Http\Controllers\StaffController::class, 'updateAdditionInformation'])->name('updateAdditionInformation');
+Route::post('deleteStaffInfo', [App\Http\Controllers\StaffInfoController::class, 'deleteStaffInfo'])->name('deleteStaffInfo');
+Route::post('insertStaffInfoResearch', [App\Http\Controllers\StaffInfoController::class, 'insertStaffInfoResearch'])->name('insertStaffInfoResearch');
+Route::post('insertStaffInfoArticle', [App\Http\Controllers\StaffInfoController::class, 'insertStaffInfoArticle'])->name('insertStaffInfoArticle');
+Route::post('insertStaffInfoProceeding', [App\Http\Controllers\StaffInfoController::class, 'insertStaffInfoProceeding'])->name('insertStaffInfoProceeding');
+Route::post('insertStaffInfoOthers', [App\Http\Controllers\StaffInfoController::class, 'insertStaffInfoOthers'])->name('insertStaffInfoOthers');
+Route::post('insertStaffInfoSupervision', [App\Http\Controllers\StaffInfoController::class, 'insertStaffInfoSupervision'])->name('insertStaffInfoSupervision');
+Route::post('insertStaffInfoConsultation', [App\Http\Controllers\StaffInfoController::class, 'insertStaffInfoConsultation'])->name('insertStaffInfoConsultation');
+Route::post('insertStaffInfoAward_Recognition', [App\Http\Controllers\StaffInfoController::class, 'insertStaffInfoAward_Recognition'])->name('insertStaffInfoAward_Recognition');

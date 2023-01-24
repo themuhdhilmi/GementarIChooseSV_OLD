@@ -347,4 +347,42 @@ class StaffController extends Controller
             //return response()->json(['success' => 'Success! Students declined.']);
     }
 
+    public function updateProfilePicture(Request  $request)
+    {
+        request()->validate([
+            'fileImage' => 'required|mimes:jpg|max:5000',
+            'txtEmail' => 'required|string',
+        ]);
+
+        try {
+            $request->file('fileImage')->move(public_path().'/downloadable/staff_img',  auth()->user()->email . '.jpg');
+        } catch (\Exception $e) {
+            return redirect()->route('staff_page', ['id' => 'update_profile','errors' => 'Error: File upload failed.', 'profile_picture' => 'profile_picture']);
+        }
+
+        return redirect()->route('staff_page', ['id' => 'update_profile','success' => 'Success! Profile picture uploaded.', 'profile_picture' => 'profile_picture']);
+    }
+
+    public function updateAdditionInformation(Request $request)
+    {
+        request()->validate([
+            'txtScopusId' => 'nullable|string',
+            'txtGoogleScholar' => 'nullable|string',
+            'txtConsultationPrice' => 'nullable|numeric'
+        ]);
+
+        $staff = StaffMain::where('email', auth()->user()->email)->first();
+
+        if($staff) {
+            $staff->scopus_id = $request->input('txtScopusId');
+            $staff->google_scholar = $request->input('txtGoogleScholar');
+            $staff->consultation_price = $request->input('txtConsultationPrice');
+            $staff->save();
+            return redirect()->route('staff_page', ['id' => 'update_profile','success' => 'Success! Staff information updated.' ,  'addition_information' => 'addition_information']);
+        }
+        else{
+            return redirect()->route('staff_page', ['id' => 'update_profile','errors' => 'Error: Staff not found.',  'addition_information' => 'addition_information']);
+        }
+    }
+
 }

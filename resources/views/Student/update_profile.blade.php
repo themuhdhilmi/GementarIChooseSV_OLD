@@ -455,15 +455,12 @@
                                                             <input type="file" class="form-control" id="fileAbstract" required accept=".pdf"
                                                             name="fileAbstract" />
                                                         <br>
-
-
                                                     @endif
-
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label for="example-text-input" class="form-control-label">Poster*
+                                                    <label for="example-text-input" class="form-control-label">Poster/Proposal*
                                                         (PDF Max : 5MB)</label>
                                                     @if ($currentStudent->has_poster_proposal_path == '1')
                                                         <a style="color: blue"

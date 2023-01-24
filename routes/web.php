@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\GlobalAdmin;
+use App\Models\StaffInfo;
 use App\Models\StaffMain;
 use App\Models\StaffStudent;
 use App\Models\StudentList;
@@ -302,6 +303,28 @@ Route::get('staff_page/{id}', function ($id) {
                 'MainUser' => $MainUser,
                 'countCurrentStaffSupervisee' => $countCurrentStaffSupervisee,
                 'countCurrentRequest' => $countCurrentRequest,
+            ]);
+        }
+
+        if ($id == 'update_profile') {
+
+            $studentsFiltered = StudentMain::join('staff_students', 'student_mains.email', '=', 'staff_students.email')->where('email_staff', Auth::user()->email)->where('is_confirmed', '1')->get();
+
+            $currentStaffMain = StaffMain::where('email', Auth::user()->email)->first();
+
+            $currentStaffInfos = StaffInfo::where('email', Auth::user()->email)->get();
+
+            return view('Staff/update_profile',  [
+                'globalAdmin' =>  $globalAdmin,
+                'students' => $studentsFiltered ,
+                'studentsList' => $studentsList,
+                'staffMain' => $staffMain,
+                'staffStudents' => $staffStudents,
+                'MainUser' => $MainUser,
+                'countCurrentStaffSupervisee' => $countCurrentStaffSupervisee,
+                'countCurrentRequest' => $countCurrentRequest,
+                'currentStaffMain' => $currentStaffMain,
+                'currentStaffInfos' => $currentStaffInfos,
             ]);
         }
     }

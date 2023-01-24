@@ -77,7 +77,7 @@
                         <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">PROFILE</h6>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link " href="{{ route('staff_page', ['id' => 'update_profile']) }}">
+                        <a class="nav-link " href="{{ route('staff_page', ['id' => 'update_profile']) }}?profile_picture">
                             <div
                                 class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                                 <i class="ni ni-single-copy-04 text-warning text-sm opacity-10"></i>
@@ -334,8 +334,8 @@
                         <div class="card">
                             <div class="card-header mx-4 p-3 text-center">
                                 <div
-                                    class="icon icon-shape icon-lg bg-gradient-primary shadow text-center border-radius-lg">
-                                    <i class="fas fa-duotone fa-quote-left"></i>
+                                    class="icon icon-shape icon-lg bg-gradient-danger shadow text-center border-radius-lg">
+                                    <i class="fas fa-duotone fa-exclamation"></i>
                                 </div>
                             </div>
                             <div class="card-body pt-0 p-3 text-center">
