@@ -303,7 +303,7 @@
                             </div>
                             <div class="card-body pt-0 p-3 text-center">
                                 <h6 class="text-center mb-0">Student Profile</h6>
-                                <span class="text-xs">Plase update your profile. Request your desire supervisor and check
+                                <span class="text-xs">Plase update your profile. Request your desired supervisor and check
                                     if you've been approved.</span>
                                 <hr class="horizontal dark my-3">
                                 <div class="table-responsive">
@@ -375,7 +375,7 @@
                                                             @if ($currentStudentSupervisor->is_confirmed == '1')
                                                                 <a style="font-weight: bold; color: green">[APPROVED]</a>
                                                             @else
-                                                                <a style="font-weight: bold; color: red">[PEDNING
+                                                                <a style="font-weight: bold; color: red">[PENDING
                                                                     APPROVAL]</a>
                                                             @endif
                                                         @endif

@@ -16,6 +16,14 @@
 <html lang="en">
 
 <head>
+    <style>
+        @media (-webkit-device-pixel-ratio: 1.25) {
+            * {
+                zoom: 98%;
+            }
+        }
+    </style>
+
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
@@ -75,12 +83,13 @@
                                                 <div class="mt-n4 mt-lg-n6 mb-4 mb-lg-0">
                                                     <div class="avatar avatar-xl position-relative">
                                                         @if (file_exists(public_path('downloadable/staff_img/' . $user->email . '.jpg')))
-                                                        <img src="../downloadable/staff_img/{{ $user->email }}.jpg" class="w-90 h-100 border-radius-lg shadow-sm">
-                                                    @else
-                                                        <img src="{{ asset('downloadable/staff_img/empty_profile.jpg') }}"
-                                                        class="w-90 h-100  border-radius-lg shadow-sm">
-                                                    @endif
-                                                </div>
+                                                            <img src="../downloadable/staff_img/{{ $user->email }}.jpg"
+                                                                class="w-90 h-100 border-radius-lg shadow-sm">
+                                                        @else
+                                                            <img src="{{ asset('downloadable/staff_img/empty_profile.jpg') }}"
+                                                                class="w-90 h-100  border-radius-lg shadow-sm">
+                                                        @endif
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -97,9 +106,9 @@
                                                 </h5>
                                                 <div class="h6 font-weight-300">
                                                     @if ($staff->can_supervise == '0')
-                                                    <a ></a>
+                                                        <a></a>
                                                     @else
-                                                    <a style="color: green">supervisor</a>
+                                                        <a style="color: green">supervisor</a>
                                                     @endif
                                                 </div>
 

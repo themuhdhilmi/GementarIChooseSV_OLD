@@ -8,6 +8,12 @@
         html {
             overflow-y: hidden;
         }
+        @media (-webkit-device-pixel-ratio: 1.25) {
+  * {
+    zoom: 98%;
+  }
+}
+
     </style>
 
     <!DOCTYPE html>
@@ -29,6 +35,7 @@
         <!-- CSS Files -->
         <link id="pagestyle" href="../assets/css/argon-dashboard.css?v=2.0.4" rel="stylesheet" />
     </head>
+
 
     <body class="g-sidenav-show bg-gray-100">
         <div class="position-absolute w-100 min-height-300 top-0"
