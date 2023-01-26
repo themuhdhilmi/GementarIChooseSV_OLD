@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\GlobalAdmin;
 use App\Models\StaffMain;
 use App\Models\StaffStudent;
+use Auth;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Support\Facades\Hash;
 use Symfony\Component\HttpFoundation\Request;
@@ -96,10 +97,10 @@ class StaffController extends Controller
                 }
                 else
                 {
-                    StaffStudent::where('email_staff', $data['current_email'])->update([
-                        'email_staff' => $trimmedEmail,
-                        'is_confirmed' => 0
-                    ]);
+                    // StaffStudent::where('email_staff', $data['current_email'])->update([
+                    //     'email_staff' => $trimmedEmail,
+                    //     'is_confirmed' => 0
+                    // ]);
                 }
 
             }
@@ -355,7 +356,7 @@ class StaffController extends Controller
         ]);
 
         try {
-            $request->file('fileImage')->move(public_path().'/downloadable/staff_img',  auth()->user()->email . '.jpg');
+            $request->file('fileImage')->move(public_path().'/downloadable/staff_img',  Auth::user()->email . '.jpg');
         } catch (\Exception $e) {
             return redirect()->route('staff_page', ['id' => 'update_profile','errors' => 'Error: File upload failed.', 'profile_picture' => 'profile_picture']);
         }
@@ -371,7 +372,7 @@ class StaffController extends Controller
             'txtConsultationPrice' => 'nullable|numeric'
         ]);
 
-        $staff = StaffMain::where('email', auth()->user()->email)->first();
+        $staff = StaffMain::where('email', Auth::user()->email)->first();
 
         if($staff) {
             $staff->scopus_id = $request->input('txtScopusId');
@@ -384,5 +385,7 @@ class StaffController extends Controller
             return redirect()->route('staff_page', ['id' => 'update_profile','errors' => 'Error: Staff not found.',  'addition_information' => 'addition_information']);
         }
     }
+
+
 
 }
